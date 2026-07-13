@@ -156,6 +156,28 @@ $router->post('/contacto', 'PublicController', 'contacto');
 
 $requestUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 
+// El participante usa un portal acotado. Esta lista tambien impide acceder
+// manualmente por URL a modulos administrativos que no aparecen en su menu.
+if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE') {
+    $rutasParticipante = [
+        '/', '/dashboard', '/logout', '/actividades', '/actividades/ver',
+        '/equipos', '/equipos/crear', '/equipos/ver',
+        '/equipos/jugadores/agregar', '/equipos/jugadores/eliminar',
+        '/inscripciones/equipo/crear', '/inscripciones/individual/crear',
+        '/factura-publica', '/mi-cuenta/password',
+    ];
+
+    if (!in_array($requestUri, $rutasParticipante, true)
+        && !preg_match('#^/evento/[a-f0-9]{64}$#i', $requestUri)) {
+        http_response_code(403);
+        ob_start();
+        require ROOT_PATH . '/views/errors/403.php';
+        $content = ob_get_clean();
+        require ROOT_PATH . '/views/layout/main.php';
+        exit;
+    }
+}
+
 // Ruta dinamica /evento/{token} generada por el codigo QR de cada actividad
 // (token_publico: 64 caracteres hexadecimales).
 if (preg_match('#^/evento/([a-f0-9]{64})$#i', $requestUri, $coincidencia)) {

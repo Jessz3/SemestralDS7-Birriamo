@@ -11,6 +11,7 @@ use App\Models\Bitacora;
 use App\Models\Deporte;
 use App\Models\Devolucion;
 use App\Models\Entrenador;
+use App\Models\Equipo;
 use App\Models\Factura;
 use App\Models\Incidente;
 use App\Models\InscripcionEquipo;
@@ -18,6 +19,7 @@ use App\Models\InscripcionIndividual;
 use App\Models\Instalacion;
 use App\Models\Organizador;
 use App\Models\Pago;
+use App\Models\Participante;
 use App\Utils\Sanitizacion;
 use App\Utils\Validaciones;
 
@@ -30,6 +32,15 @@ final class ActividadController extends Controller
     public function index(): void
     {
         $this->requireAuth();
+
+        if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE') {
+            $this->render('actividades/participante', [
+                'actividades' => (new Actividad())->vigentesParaParticipante(),
+                'exito' => $this->getSuccess(),
+            ]);
+            return;
+        }
+
         $this->render('actividades/index', [
             'actividades' => (new Actividad())->todos(),
             'exito' => $this->getSuccess(),
@@ -191,6 +202,37 @@ final class ActividadController extends Controller
 
         if (!$actividad) {
             $this->redirect('/actividades');
+        }
+
+        if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE') {
+            if ($actividad['estado'] !== 'PUBLICADA' || strtotime($actividad['fecha_fin']) < time()) {
+                $this->redirect('/actividades');
+            }
+
+            $participante = (new Participante())->buscarPorUsuarioId((int) $_SESSION['usuario_id']);
+            if (!$participante) {
+                throw new \RuntimeException('La cuenta no tiene un perfil de participante asociado.');
+            }
+            $participanteId = (int) $participante['id'];
+            $inscripcionesIndividuales = (new InscripcionIndividual())->porParticipante($participanteId);
+            $inscripcionesEquipo = (new InscripcionEquipo())->porParticipante($participanteId);
+
+            $this->render('actividades/ver_participante', [
+                'actividad' => $actividad,
+                'cuposOcupados' => $modelo->cuposOcupados($id),
+                'equipos' => (new Equipo())->porParticipante($participanteId),
+                'inscripcionIndividual' => array_values(array_filter(
+                    $inscripcionesIndividuales,
+                    static fn(array $i): bool => (int) $i['actividad_id'] === $id
+                ))[0] ?? null,
+                'inscripcionesEquipo' => array_values(array_filter(
+                    $inscripcionesEquipo,
+                    static fn(array $i): bool => (int) $i['actividad_id'] === $id
+                )),
+                'admiteInscripcion' => $modelo->admiteInscripcion($actividad),
+                'exito' => $this->getSuccess(),
+            ]);
+            return;
         }
 
         $this->render('actividades/ver', [

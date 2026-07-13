@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-head">
-        <div><div class="eyebrow">Inscripciones por equipo</div><h1>Equipos Registrados</h1></div>
+        <div><div class="eyebrow">Inscripciones por equipo</div><h1><?= ($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE' ? 'Mis Equipos' : 'Equipos Registrados' ?></h1></div>
         <a class="btn btn-primary" href="/equipos/crear">+ Nuevo equipo</a>
     </div>
 
@@ -10,6 +10,7 @@
         <table class="data-table">
             <thead><tr><th></th><th>Nombre</th><th>Deporte</th><th>Academia</th><th>Representante</th><th>Jugadores</th><th>Acciones</th></tr></thead>
             <tbody>
+                <?php if (empty($equipos)): ?><tr><td colspan="7" class="empty-state">Todavía no tienes equipos registrados.</td></tr><?php endif; ?>
                 <?php foreach ($equipos as $e): ?>
                     <tr>
                         <td style="width:44px;">

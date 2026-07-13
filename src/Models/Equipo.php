@@ -22,6 +22,34 @@ final class Equipo extends Model
         return $this->db->query($sql)->fetchAll();
     }
 
+    public function porParticipante(int $participanteId): array
+    {
+        $sql = "SELECT eq.*, a.nombre AS academia_nombre, d.nombre AS deporte_nombre,
+                    CONCAT(u.nombre, ' ', u.apellido) AS representante,
+                    (SELECT COUNT(*) FROM jugadores j WHERE j.equipo_id = eq.id) AS total_jugadores
+                FROM equipos eq
+                JOIN participantes p ON p.id = eq.participante_id
+                JOIN usuarios u ON u.id = p.usuario_id
+                JOIN deportes d ON d.id = eq.deporte_id
+                LEFT JOIN academias a ON a.id = eq.academia_id
+                WHERE eq.participante_id = :participante_id
+                ORDER BY eq.nombre ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['participante_id' => $participanteId]);
+        return $stmt->fetchAll();
+    }
+
+    public function perteneceAUsuario(int $equipoId, int $usuarioId): bool
+    {
+        $stmt = $this->db->prepare(
+            'SELECT COUNT(*) FROM equipos eq
+             JOIN participantes p ON p.id = eq.participante_id
+             WHERE eq.id = :equipo_id AND p.usuario_id = :usuario_id'
+        );
+        $stmt->execute(['equipo_id' => $equipoId, 'usuario_id' => $usuarioId]);
+        return (int) $stmt->fetchColumn() > 0;
+    }
+
     public function buscarPorId(int $id): ?array
     {
         $sql = "SELECT eq.*, a.nombre AS academia_nombre, d.nombre AS deporte_nombre,
@@ -103,9 +131,15 @@ final class Equipo extends Model
         return (int) $this->db->lastInsertId();
     }
 
-    public function eliminarJugador(int $jugadorId): bool
+    public function eliminarJugador(int $jugadorId, ?int $equipoId = null): bool
     {
-        $stmt = $this->db->prepare('DELETE FROM jugadores WHERE id = :id');
-        return $stmt->execute(['id' => $jugadorId]);
+        $sql = 'DELETE FROM jugadores WHERE id = :id';
+        $parametros = ['id' => $jugadorId];
+        if ($equipoId !== null) {
+            $sql .= ' AND equipo_id = :equipo_id';
+            $parametros['equipo_id'] = $equipoId;
+        }
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($parametros);
     }
 }

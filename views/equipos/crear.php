@@ -43,6 +43,7 @@
                 <textarea name="descripcion" rows="2"><?= htmlspecialchars($datos['descripcion'] ?? '') ?></textarea>
             </div>
 
+            <?php if (!$esParticipante): ?>
             <hr style="border:none;border-top:1px solid var(--color-border);margin:1.2rem 0;">
             <p class="field-hint">Datos del representante (se creara automaticamente su cuenta de Participante si no existe):</p>
 
@@ -66,6 +67,9 @@
                     <input type="text" name="rep_telefono" value="<?= htmlspecialchars($datos['rep_telefono'] ?? '') ?>">
                 </div>
             </div>
+            <?php else: ?>
+                <p class="field-hint">Quedarás registrado automáticamente como representante de este equipo.</p>
+            <?php endif; ?>
 
             <button type="submit" class="btn btn-primary">Guardar equipo</button>
             <a class="btn btn-outline" href="/equipos">Cancelar</a>

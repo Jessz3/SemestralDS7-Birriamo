@@ -19,8 +19,13 @@ final class EquipoController extends Controller
     public function index(): void
     {
         $this->requireAuth();
+        $equipos = (new Equipo())->todos();
+        if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE') {
+            $perfil = (new Participante())->buscarPorUsuarioId((int) $_SESSION['usuario_id']);
+            $equipos = $perfil ? (new Equipo())->porParticipante((int) $perfil['id']) : [];
+        }
         $this->render('equipos/index', [
-            'equipos' => (new Equipo())->todos(),
+            'equipos' => $equipos,
             'exito' => $this->getSuccess(),
         ]);
     }
@@ -34,6 +39,7 @@ final class EquipoController extends Controller
             'errores' => $this->getErrors(),
             'datos' => $this->oldInput(),
             'csrf' => $_SESSION['csrf_token'],
+            'esParticipante' => ($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE',
         ]);
     }
 
@@ -79,6 +85,19 @@ final class EquipoController extends Controller
             'rep_telefono' => Sanitizacion::texto($_POST['rep_telefono'] ?? ''),
         ];
 
+        $perfilParticipante = null;
+        if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE') {
+            $perfilParticipante = (new Participante())->buscarPorUsuarioId((int) $_SESSION['usuario_id']);
+            if (!$perfilParticipante) {
+                throw new \RuntimeException('La cuenta no tiene un perfil de participante asociado.');
+            }
+            $participanteCompleto = (new Participante())->buscarPorId((int) $perfilParticipante['id']);
+            $datos['rep_nombre'] = $participanteCompleto['nombre'];
+            $datos['rep_apellido'] = $participanteCompleto['apellido'];
+            $datos['rep_correo'] = $participanteCompleto['correo'];
+            $datos['rep_telefono'] = $participanteCompleto['telefono'] ?? '';
+        }
+
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($datos['nombre'], 'nombre del equipo'),
             fn() => Validaciones::requerido((string) $datos['deporte_id'], 'deporte'),
@@ -92,9 +111,11 @@ final class EquipoController extends Controller
             $this->redirect('/equipos/crear');
         }
 
-        $participante = (new Participante())->encontrarOCrear(
-            $datos['rep_nombre'], $datos['rep_apellido'], $datos['rep_correo'], $datos['rep_telefono']
-        );
+        $participante = $perfilParticipante
+            ? ['participante_id' => (int) $perfilParticipante['id']]
+            : (new Participante())->encontrarOCrear(
+                $datos['rep_nombre'], $datos['rep_apellido'], $datos['rep_correo'], $datos['rep_telefono']
+            );
 
         $datos['avatar'] = $this->procesarAvatar();
         $id = (new Equipo())->crear($participante['participante_id'], $datos);
@@ -122,6 +143,7 @@ final class EquipoController extends Controller
         if (!$equipo) {
             $this->redirect('/equipos');
         }
+        $this->verificarPropiedadParticipante($id);
 
         $this->render('equipos/ver', [
             'equipo' => $equipo,
@@ -138,6 +160,7 @@ final class EquipoController extends Controller
         $this->verifyCsrf();
 
         $equipoId = (int) ($_POST['equipo_id'] ?? 0);
+        $this->verificarPropiedadParticipante($equipoId);
         $datos = [
             'nombre_completo' => Sanitizacion::texto($_POST['nombre_completo'] ?? ''),
             'edad' => Sanitizacion::entero($_POST['edad'] ?? 0),
@@ -166,7 +189,18 @@ final class EquipoController extends Controller
     {
         $this->requireAuth();
         $equipoId = (int) ($_GET['equipo_id'] ?? 0);
-        (new Equipo())->eliminarJugador((int) ($_GET['jugador_id'] ?? 0));
+        $this->verificarPropiedadParticipante($equipoId);
+        (new Equipo())->eliminarJugador((int) ($_GET['jugador_id'] ?? 0), $equipoId);
         $this->redirect('/equipos/ver?id=' . $equipoId);
+    }
+
+    private function verificarPropiedadParticipante(int $equipoId): void
+    {
+        if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE'
+            && !(new Equipo())->perteneceAUsuario($equipoId, (int) $_SESSION['usuario_id'])) {
+            http_response_code(403);
+            $this->render('errors/403');
+            exit;
+        }
     }
 }

@@ -15,14 +15,19 @@
 
             <div class="field">
                 <label>Equipo</label>
+                <?php if (empty($equipos)): ?>
+                    <div class="alert alert-danger">No tienes un equipo de <?= htmlspecialchars($actividad['deporte_nombre']) ?> disponible.</div>
+                    <a class="btn btn-outline" href="<?= BASE_URL ?>/equipos/crear">Crear equipo</a>
+                <?php else: ?>
                 <select name="equipo_id" required>
                     <?php foreach ($equipos as $e): ?>
                         <option value="<?= (int) $e['id'] ?>"><?= htmlspecialchars($e['nombre']) ?> (<?= htmlspecialchars($e['deporte_nombre']) ?>)</option>
                     <?php endforeach; ?>
                 </select>
+                <?php endif; ?>
             </div>
 
-            <button type="submit" class="btn btn-primary">Confirmar inscripcion</button>
+            <?php if (!empty($equipos)): ?><button type="submit" class="btn btn-primary">Confirmar inscripcion</button><?php endif; ?>
             <a class="btn btn-outline" href="/actividades/ver?id=<?= (int) $actividad['id'] ?>">Cancelar</a>
         </form>
     </div>

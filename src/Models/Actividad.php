@@ -28,6 +28,31 @@ final class Actividad extends Model
         return $this->db->query($sql)->fetchAll();
     }
 
+    /** Actividades publicadas que aun estan en curso o por comenzar y admiten inscripcion. */
+    public function vigentesParaParticipante(): array
+    {
+        $sql = self::SELECT_BASE . "
+            WHERE act.estado = 'PUBLICADA'
+              AND act.fecha_fin >= CURRENT_TIMESTAMP
+              AND (act.fecha_cierre_inscripcion IS NULL OR act.fecha_cierre_inscripcion >= CURRENT_TIMESTAMP)
+            ORDER BY act.fecha_inicio ASC";
+        return $this->db->query($sql)->fetchAll();
+    }
+
+    public function admiteInscripcion(array $actividad): bool
+    {
+        if (($actividad['estado'] ?? '') !== 'PUBLICADA') {
+            return false;
+        }
+
+        if (strtotime((string) ($actividad['fecha_fin'] ?? '')) < time()) {
+            return false;
+        }
+
+        return empty($actividad['fecha_cierre_inscripcion'])
+            || strtotime((string) $actividad['fecha_cierre_inscripcion']) >= time();
+    }
+
     public function buscarPorId(int $id): ?array
     {
         $stmt = $this->db->prepare(self::SELECT_BASE . ' WHERE act.id = :id LIMIT 1');

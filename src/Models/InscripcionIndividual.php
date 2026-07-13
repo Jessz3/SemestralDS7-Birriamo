@@ -21,6 +21,21 @@ final class InscripcionIndividual extends Model
         return $stmt->fetchAll();
     }
 
+    public function porParticipante(int $participanteId): array
+    {
+        $sql = "SELECT ii.*, a.nombre AS actividad_nombre, a.fecha_inicio, a.fecha_fin,
+                       a.modalidad, d.nombre AS deporte_nombre, i.nombre AS instalacion_nombre
+                FROM inscripciones_individuales ii
+                JOIN actividades a ON a.id = ii.actividad_id
+                JOIN deportes d ON d.id = a.deporte_id
+                JOIN instalaciones i ON i.id = a.instalacion_id
+                WHERE ii.participante_id = :participante_id
+                ORDER BY a.fecha_inicio DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['participante_id' => $participanteId]);
+        return $stmt->fetchAll();
+    }
+
     public function buscarPorId(int $id): ?array
     {
         $sql = "SELECT ii.*, a.nombre AS actividad_nombre, a.costo_inscripcion,

@@ -15,17 +15,17 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" required>
+                    <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" <?= $esParticipante ? 'readonly' : '' ?> required>
                 </div>
                 <div class="field">
                     <label>Apellido</label>
-                    <input type="text" name="apellido" value="<?= htmlspecialchars($datos['apellido'] ?? '') ?>" required>
+                    <input type="text" name="apellido" value="<?= htmlspecialchars($datos['apellido'] ?? '') ?>" <?= $esParticipante ? 'readonly' : '' ?> required>
                 </div>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>Correo electronico</label>
-                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" required>
+                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" <?= $esParticipante ? 'readonly' : '' ?> required>
                 </div>
                 <div class="field">
                     <label>Telefono</label>
