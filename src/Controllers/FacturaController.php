@@ -120,7 +120,14 @@ final class FacturaController extends Controller
         $pdf->SetFont('helvetica', '', 8);
         $pdf->Cell(0, 5, 'Documento ' . $factura['formato_documento'] . ' con validez de integridad verificable. Universidad Tecnologica de Panama.', 0, 1, 'C');
 
-        $rutaSalida = __DIR__ . '/../../public/uploads/factura_' . $factura['id'] . '.pdf';
+        $directorioSalida = __DIR__ . '/../../public/uploads';
+        if (!is_dir($directorioSalida) && !mkdir($directorioSalida, 0775, true) && !is_dir($directorioSalida)) {
+            http_response_code(500);
+            echo 'No fue posible crear el directorio para guardar la factura PDF.';
+            return;
+        }
+
+        $rutaSalida = $directorioSalida . '/factura_' . $factura['id'] . '.pdf';
         $pdf->Output($rutaSalida, 'F');
 
         $hash = hash_file('sha256', $rutaSalida);
