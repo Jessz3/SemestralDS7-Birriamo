@@ -1,0 +1,31 @@
+<div class="hero" style="padding-bottom:2rem;">
+    <span class="badge-dot" style="display:inline-block;width:10px;height:10px;border-radius:50%;margin-bottom:.5rem;"></span>
+    <h1>Iniciar Sesion</h1>
+    <p>Acceso administrativo y operativo del Sistema de Eventos Deportivos.</p>
+</div>
+
+<div class="section-public" style="max-width:420px;">
+    <div class="card">
+        <?php require __DIR__ . '/../layout/_alerts.php'; ?>
+
+        <form method="POST" action="/login">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
+
+            <div class="field">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario" required autofocus>
+            </div>
+
+            <div class="field">
+                <label for="password">Contrasena</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Ingresar</button>
+        </form>
+
+        <p class="field-hint" style="margin-top:1rem;text-align:center;">
+            Usuario de prueba: <code>admin</code> — contrasena <code>Admin123</code>
+        </p>
+    </div>
+</div>

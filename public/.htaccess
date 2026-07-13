@@ -1,0 +1,18 @@
+RewriteEngine On
+
+# Si el archivo o directorio solicitado no existe fisicamente,
+# se redirige todo al front controller (index.php).
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Cabeceras de seguridad basicas (OWASP)
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Evitar listado de directorios
+Options -Indexes
