@@ -23,7 +23,9 @@ final class PublicController extends Controller
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
-        $actividades = (new Actividad())->disponiblesPublico();
+        // Incluye actividades proximas y las que ya comenzaron, siempre que
+        // sigan publicadas y con inscripciones abiertas.
+        $actividades = (new Actividad())->vigentesParaParticipante();
         $this->render('public/inicio', [
             'actividades' => $actividades,
             'errores' => $this->getErrors(),
@@ -54,6 +56,7 @@ final class PublicController extends Controller
         $this->render('public/evento', [
             'actividad' => $actividad,
             'equipos' => $equipos,
+            'admiteInscripcion' => $modelo->admiteInscripcion($actividad),
         ], 'layout/guest');
     }
 

@@ -1,32 +1,38 @@
 <div class="hero">
     <span class="badge-dot" style="display:inline-block;width:10px;height:10px;border-radius:50%;margin-bottom:.6rem;"></span>
     <h1>Sistema de Eventos Deportivos</h1>
-    <p>Organiza, inscribe y da seguimiento a torneos, entrenamientos y eventos deportivos de la comunidad, con integridad y trazabilidad garantizadas.</p>
+    <p>Organiza, inscríbete y da seguimiento a torneos, entrenamientos y eventos deportivos de la comunidad.</p>
 </div>
 
 <section class="section-public" id="actividades">
     <h2>Actividades disponibles</h2>
+    <p>Consulta las actividades próximas y las que están en curso con inscripciones abiertas.</p>
 
     <?php if (empty($actividades)): ?>
-        <div class="empty-state">Por el momento no hay actividades publicadas. Vuelve pronto.</div>
+        <div class="empty-state">Por el momento no hay actividades vigentes con inscripciones abiertas. Vuelve pronto.</div>
     <?php else: ?>
         <div class="grid-3">
             <?php foreach ($actividades as $act): ?>
                 <div class="event-card">
-                    <span class="tag"><?= htmlspecialchars($act['deporte']) ?></span>
+                    <div class="card-header-row">
+                        <span class="tag"><?= htmlspecialchars($act['deporte_nombre']) ?></span>
+                        <span class="badge <?= strtotime($act['fecha_inicio']) <= time() ? 'badge-success' : 'badge-neutral' ?>">
+                            <?= strtotime($act['fecha_inicio']) <= time() ? 'EN CURSO' : 'PRÓXIMA' ?>
+                        </span>
+                    </div>
                     <h3><?= htmlspecialchars($act['nombre']) ?></h3>
+                    <p><?= htmlspecialchars($act['descripcion']) ?></p>
                     <p class="field-hint">
-                        📅 <?= htmlspecialchars(substr($act['fecha_inicio'], 0, 16)) ?>
-                        <br>📍 <?= htmlspecialchars($act['instalacion']) ?>
+                        Fecha: <?= htmlspecialchars(substr($act['fecha_inicio'], 0, 16)) ?><br>
+                        Lugar: <?= htmlspecialchars($act['instalacion_nombre']) ?>
                     </p>
-                    <p style="font-size:.85rem;">
-                        <?php if ((int) $act['requiere_pago'] === 1): ?>
-                            Inscripcion: <strong>$<?= number_format((float) $act['costo_inscripcion'], 2) ?></strong>
-                        <?php else: ?>
-                            <strong>Gratuita</strong>
-                        <?php endif; ?>
+                    <p><span class="badge badge-neutral"><?= htmlspecialchars($act['modalidad']) ?></span></p>
+                    <p>
+                        <?= (int) $act['requiere_pago'] === 1
+                            ? 'Inscripción: <strong>$' . number_format((float) $act['costo_inscripcion'], 2) . '</strong>'
+                            : '<strong>Gratuita</strong>' ?>
                     </p>
-                    <a class="btn btn-primary btn-sm" href="/evento/<?= $act['token_publico'] ?>">Ver detalle</a>
+                    <a class="btn btn-primary btn-sm" href="<?= BASE_URL ?>/evento/<?= htmlspecialchars($act['token_publico']) ?>">Ver detalle e inscribirme</a>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -34,59 +40,38 @@
 </section>
 
 <section class="section-public" id="stack" style="background:#fff;border-radius:12px;">
-    <h2>Nuestro Stack Tecnologico</h2>
+    <h2>Nuestro stack tecnológico</h2>
     <div class="grid-4">
-        <div class="card"><strong>Backend</strong><p class="field-hint">PHP 8.1+, arquitectura MVC, PSR-1/PSR-4 via Composer.</p></div>
-        <div class="card"><strong>Base de Datos</strong><p class="field-hint">MySQL/MariaDB con PDO y sentencias preparadas (30 tablas + vistas).</p></div>
-        <div class="card"><strong>Seguridad</strong><p class="field-hint">OWASP, HMAC-SHA256, RSA/OpenSSL, hashing BCRYPT, bitacora firmada.</p></div>
-        <div class="card"><strong>Reportes</strong><p class="field-hint">TCPDF para facturacion con firma digital y hash SHA-256.</p></div>
+        <div class="card"><strong>Backend</strong><p class="field-hint">PHP 8.1+, arquitectura MVC y autoload PSR-4.</p></div>
+        <div class="card"><strong>Base de datos</strong><p class="field-hint">MySQL/MariaDB con PDO y sentencias preparadas.</p></div>
+        <div class="card"><strong>Seguridad</strong><p class="field-hint">OWASP, HMAC-SHA256, RSA/OpenSSL y contraseñas con hash.</p></div>
+        <div class="card"><strong>Reportes</strong><p class="field-hint">TCPDF para facturación con firma digital y hash SHA-256.</p></div>
     </div>
 </section>
 
 <section class="section-public" id="importancia">
     <h2>¿Por qué este sistema?</h2>
     <div class="card">
-        <p>Centraliza la organización de actividades deportivas comunitarias — torneos, entrenamientos y eventos — resolviendo de forma trazable la inscripción de equipos y participantes, el cobro con ITBMS, y la evaluación de árbitros e instalaciones. Cada acción relevante queda registrada en una bitácora firmada digitalmente, garantizando la integridad de la información ante cualquier auditoría.</p>
+        <p>Centraliza la organización de actividades deportivas, la inscripción de equipos y participantes, los pagos y la evaluación de árbitros. Cada acción relevante queda registrada para garantizar la integridad de la información.</p>
     </div>
 </section>
 
 <section class="section-public" id="contacto">
-    <h2>Contactenos</h2>
-
+    <h2>Contáctenos</h2>
     <?php require __DIR__ . '/../layout/_alerts.php'; ?>
 
     <div class="card" style="max-width:560px;">
-        <form method="POST" action="/contacto">
+        <form method="POST" action="<?= BASE_URL ?>/contacto">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
-
             <div class="grid-2">
-                <div class="field">
-                    <label>Nombre</label>
-                    <input type="text" name="nombre" required>
-                </div>
-                <div class="field">
-                    <label>Correo electronico</label>
-                    <input type="email" name="correo" required>
-                </div>
+                <div class="field"><label>Nombre</label><input type="text" name="nombre" required></div>
+                <div class="field"><label>Correo electrónico</label><input type="email" name="correo" required></div>
             </div>
-            <div class="field">
-                <label>Telefono (opcional)</label>
-                <input type="text" name="telefono">
-            </div>
-            <div class="field">
-                <label>Asunto</label>
-                <input type="text" name="asunto" required>
-            </div>
-            <div class="field">
-                <label>Mensaje</label>
-                <textarea name="mensaje" rows="4" required></textarea>
-            </div>
-
+            <div class="field"><label>Teléfono (opcional)</label><input type="text" name="telefono"></div>
+            <div class="field"><label>Asunto</label><input type="text" name="asunto" required></div>
+            <div class="field"><label>Mensaje</label><textarea name="mensaje" rows="4" required></textarea></div>
             <button type="submit" class="btn btn-primary">Enviar mensaje</button>
         </form>
-
-        <p class="field-hint" style="margin-top:1rem;">
-            También puedes escribirnos directamente a fisc<?= '' ?>@utp.ac.pa &nbsp;|&nbsp; (507) 560-3000
-        </p>
+        <p class="field-hint" style="margin-top:1rem;">También puedes escribirnos a fisc<?= '' ?>@utp.ac.pa o llamar al (507) 560-3000.</p>
     </div>
 </section>

@@ -3,9 +3,9 @@
     <h1><?= htmlspecialchars($actividad['nombre']) ?></h1>
     <p class="field-hint"><?= nl2br(htmlspecialchars($actividad['descripcion'] ?? '')) ?></p>
 
-    <?php if ($actividad['estado'] !== 'PUBLICADA'): ?>
+    <?php if (!$admiteInscripcion): ?>
         <div class="alert alert-danger">
-            Esta actividad ya no admite inscripciones (estado actual: <?= htmlspecialchars($actividad['estado']) ?>).
+            Esta actividad ya no admite inscripciones.
         </div>
     <?php endif; ?>
 
@@ -40,7 +40,7 @@
         </div>
     <?php endif; ?>
 
-    <?php if ($actividad['modalidad'] !== 'EQUIPO' && $actividad['estado'] === 'PUBLICADA'): ?>
+    <?php if ($actividad['modalidad'] !== 'EQUIPO' && $admiteInscripcion): ?>
         <div class="card" style="margin-top:1.5rem;">
             <h2>Inscripcion individual</h2>
             <p class="field-hint">Esta actividad admite participacion individual.</p>
