@@ -31,10 +31,16 @@
                 </div>
                 <div class="field">
                     <label>Rol</label>
-                    <select name="rol" required>
-                        <option value="OPERADOR" <?= $usuario['rol'] === 'OPERADOR' ? 'selected' : '' ?>>Operador</option>
-                        <option value="ADMINISTRADOR" <?= $usuario['rol'] === 'ADMINISTRADOR' ? 'selected' : '' ?>>Administrador</option>
-                    </select>
+                    <?php if (in_array($usuario['rol'], ['ORGANIZADOR', 'PARTICIPANTE'], true)): ?>
+                        <input type="hidden" name="rol" value="<?= htmlspecialchars($usuario['rol']) ?>">
+                        <input type="text" value="<?= htmlspecialchars(ucfirst(strtolower($usuario['rol']))) ?>" disabled>
+                        <p class="field-hint">Este rol no puede cambiarse porque tiene un perfil funcional asociado.</p>
+                    <?php else: ?>
+                        <select name="rol" required>
+                            <option value="OPERADOR" <?= $usuario['rol'] === 'OPERADOR' ? 'selected' : '' ?>>Operador</option>
+                            <option value="ADMINISTRADOR" <?= $usuario['rol'] === 'ADMINISTRADOR' ? 'selected' : '' ?>>Administrador</option>
+                        </select>
+                    <?php endif; ?>
                 </div>
             </div>
 

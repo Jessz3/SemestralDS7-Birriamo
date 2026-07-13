@@ -24,13 +24,30 @@ final class FirmaDigitalRsaService implements TransformadorSeguridadInterface
      */
     public static function generarParDeLlaves(): array
     {
-        $recurso = openssl_pkey_new([
+        $opciones = [
             'private_key_bits' => 2048,
             'private_key_type' => OPENSSL_KEYTYPE_RSA,
-        ]);
+        ];
 
-        openssl_pkey_export($recurso, $llavePrivada);
+        $archivoConfiguracion = self::resolverConfiguracionOpenSsl();
+        if ($archivoConfiguracion !== null) {
+            $opciones['config'] = $archivoConfiguracion;
+        }
+
+        $recurso = openssl_pkey_new($opciones);
+
+        if ($recurso === false) {
+            throw new \RuntimeException('No fue posible generar el par de llaves RSA.');
+        }
+
+        if (!openssl_pkey_export($recurso, $llavePrivada, null, $opciones)) {
+            throw new \RuntimeException('No fue posible exportar la llave privada RSA.');
+        }
+
         $detalles = openssl_pkey_get_details($recurso);
+        if ($detalles === false || empty($detalles['key'])) {
+            throw new \RuntimeException('No fue posible obtener la llave publica RSA.');
+        }
 
         return [
             'publica' => $detalles['key'],
@@ -40,14 +57,42 @@ final class FirmaDigitalRsaService implements TransformadorSeguridadInterface
     }
 
     /**
+     * En instalaciones XAMPP/Windows PHP no siempre encuentra openssl.cnf.
+     * Se conserva primero cualquier ruta configurada por el servidor y luego
+     * se buscan las ubicaciones habituales relativas al ejecutable de PHP.
+     */
+    private static function resolverConfiguracionOpenSsl(): ?string
+    {
+        $configurada = getenv('OPENSSL_CONF');
+        $directorioPhp = dirname(PHP_BINARY);
+        $candidatas = [
+            is_string($configurada) ? $configurada : '',
+            $directorioPhp . '/extras/ssl/openssl.cnf',
+            $directorioPhp . '/extras/openssl/openssl.cnf',
+        ];
+
+        foreach ($candidatas as $candidata) {
+            if ($candidata !== '' && is_file($candidata) && is_readable($candidata)) {
+                return $candidata;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Cifra la llave privada con AES-256-CBC usando la passphrase del usuario.
      * Esto evita que un administrador de BD pueda suplantar al usuario.
      */
     public static function cifrarLlavePrivada(string $llavePrivada, string $passphrase): string
     {
-        $iv = openssl_random_pseudo_bytes(16);
+        $iv = random_bytes(16);
         $llaveDerivada = hash('sha256', $passphrase, true);
         $cifrado = openssl_encrypt($llavePrivada, 'aes-256-cbc', $llaveDerivada, 0, $iv);
+
+        if ($cifrado === false) {
+            throw new \RuntimeException('No fue posible cifrar la llave privada RSA.');
+        }
 
         return base64_encode($iv) . ':' . $cifrado;
     }

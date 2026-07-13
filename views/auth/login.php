@@ -24,6 +24,10 @@
             <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Ingresar</button>
         </form>
 
+        <p style="margin-top:1rem;text-align:center;">
+            ¿No tiene una cuenta? <a href="<?= BASE_URL ?>/registro">Regístrese como organizador o participante</a>
+        </p>
+
         <p class="field-hint" style="margin-top:1rem;text-align:center;">
             Usuario de prueba: <code>admin</code> — contrasena <code>Admin123</code>
         </p>

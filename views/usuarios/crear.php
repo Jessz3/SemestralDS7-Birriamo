@@ -1,15 +1,15 @@
 <div class="container" style="max-width:640px;">
     <div class="page-head">
         <div>
-            <div class="eyebrow">Administracion</div>
-            <h1>Nuevo Usuario</h1>
+            <div class="eyebrow"><?= htmlspecialchars($eyebrow) ?></div>
+            <h1><?= htmlspecialchars($titulo) ?></h1>
         </div>
     </div>
 
     <?php require __DIR__ . '/../layout/_alerts.php'; ?>
 
     <div class="card">
-        <form method="POST" action="/usuarios/crear">
+        <form method="POST" action="<?= BASE_URL . htmlspecialchars($accion) ?>">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
 
             <div class="grid-2">
@@ -31,9 +31,16 @@
                 <div class="field">
                     <label>Rol</label>
                     <select name="rol" required>
-                        <option value="OPERADOR">Operador</option>
-                        <option value="ADMINISTRADOR">Administrador</option>
+                        <?php $rolSeleccionado = $datos['rol'] ?? $rolesPermitidos[0]; ?>
+                        <?php foreach ($rolesPermitidos as $rol): ?>
+                            <option value="<?= htmlspecialchars($rol) ?>" <?= $rolSeleccionado === $rol ? 'selected' : '' ?>>
+                                <?= htmlspecialchars(ucfirst(strtolower($rol))) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
+                    <?php if (array_intersect($rolesPermitidos, ['ORGANIZADOR', 'PARTICIPANTE'])): ?>
+                        <p class="field-hint">Organizador y Participante reciben tambien su perfil funcional automaticamente.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -55,8 +62,8 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Guardar usuario</button>
-            <a class="btn btn-outline" href="/usuarios">Cancelar</a>
+            <button type="submit" class="btn btn-primary"><?= htmlspecialchars($textoBoton) ?></button>
+            <a class="btn btn-outline" href="<?= BASE_URL . htmlspecialchars($cancelar) ?>">Cancelar</a>
         </form>
     </div>
 </div>

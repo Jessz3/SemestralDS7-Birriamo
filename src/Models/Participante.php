@@ -90,7 +90,7 @@ final class Participante extends Model
         return ['participante_id' => $participanteId, 'usuario_id' => $usuarioId, 'creado' => true];
     }
 
-    private function crearPerfil(int $usuarioId): int
+    public function crearPerfil(int $usuarioId): int
     {
         $stmt = $this->db->prepare('INSERT INTO participantes (usuario_id) VALUES (:usuario_id)');
         $stmt->execute(['usuario_id' => $usuarioId]);

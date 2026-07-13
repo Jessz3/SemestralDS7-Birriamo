@@ -29,6 +29,7 @@ final class AuthController extends Controller
 
         $this->render('auth/login', [
             'errores' => $this->getErrors(),
+            'exito' => $this->getSuccess(),
             'csrf' => $_SESSION['csrf_token'],
         ], 'layout/guest');
     }

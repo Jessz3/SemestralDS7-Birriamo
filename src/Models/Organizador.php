@@ -47,7 +47,7 @@ final class Organizador extends Model
         );
         $stmt->execute([
             'usuario_id' => $usuarioId,
-            'academia_id' => $datos['academia_id'] ?: null,
+            'academia_id' => ($datos['academia_id'] ?? null) ?: null,
             'tipo_organizador' => $datos['tipo_organizador'] ?? 'INDEPENDIENTE',
             'nombre_comercial' => $datos['nombre_comercial'] ?? null,
             'descripcion' => $datos['descripcion'] ?? null,

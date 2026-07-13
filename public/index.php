@@ -39,6 +39,8 @@ $router = new Router();
 $router->get('/login', 'AuthController', 'mostrarLogin');
 $router->post('/login', 'AuthController', 'login');
 $router->get('/logout', 'AuthController', 'logout');
+$router->get('/registro', 'UsuarioController', 'registroForm');
+$router->post('/registro', 'UsuarioController', 'registrar');
 
 // ---------- Dashboard ----------
 $router->get('/dashboard', 'HomeController', 'dashboard');

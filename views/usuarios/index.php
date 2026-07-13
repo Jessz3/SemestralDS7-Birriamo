@@ -2,7 +2,7 @@
     <div class="page-head">
         <div>
             <div class="eyebrow">Administracion</div>
-            <h1>Usuarios del Sistema (Staff)</h1>
+            <h1>Usuarios del Sistema</h1>
         </div>
         <a class="btn btn-primary" href="/usuarios/crear">+ Nuevo usuario</a>
     </div>

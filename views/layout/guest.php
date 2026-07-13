@@ -15,6 +15,7 @@
         <a href="<?= BASE_URL ?>/#actividades">Actividades</a>
         <a href="<?= BASE_URL ?>/#stack">Stack</a>
         <a href="<?= BASE_URL ?>/#contacto">Contactenos</a>
+        <a href="<?= BASE_URL ?>/registro">Registrarse</a>
         <a href="<?= BASE_URL ?>/login">Iniciar sesion</a>
     </div>
 </nav>

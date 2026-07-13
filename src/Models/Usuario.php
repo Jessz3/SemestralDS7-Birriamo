@@ -8,14 +8,18 @@ use App\Core\Model;
 
 final class Usuario extends Model
 {
+    /** Todos los roles que admite la tabla usuarios. */
+    public const ROLES = ['ADMINISTRADOR', 'OPERADOR', 'ORGANIZADOR', 'PARTICIPANTE'];
+
+    /** Roles disponibles para autorregistro desde la pagina publica. */
+    public const ROLES_REGISTRO = ['ORGANIZADOR', 'PARTICIPANTE'];
+
     /** Roles gestionables desde el panel de Usuarios (staff interno). */
     public const ROLES_STAFF = ['ADMINISTRADOR', 'OPERADOR'];
 
-    public function todosStaff(): array
+    public function todos(): array
     {
-        $stmt = $this->db->prepare(
-            "SELECT * FROM usuarios WHERE rol IN ('ADMINISTRADOR', 'OPERADOR') ORDER BY id DESC"
-        );
+        $stmt = $this->db->prepare('SELECT * FROM usuarios ORDER BY id DESC');
         $stmt->execute();
         return $stmt->fetchAll();
     }

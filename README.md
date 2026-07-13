@@ -74,7 +74,10 @@ database/schema.sql Script completo de base de datos (con datos semilla)
 
 En esta version, **todo el que participa en el sistema tiene una cuenta en `usuarios`**, con un rol especifico:
 
-- `ADMINISTRADOR` / `OPERADOR`: staff interno, gestionado desde `/usuarios` (solo Administrador).
+- Los cuatro roles pueden registrarse y consultarse desde `/usuarios` (solo Administrador).
+- `ADMINISTRADOR` / `OPERADOR`: staff interno; pueden cambiar entre ambos roles.
+- Al crear un `ORGANIZADOR` o `PARTICIPANTE` desde `/usuarios`, el sistema crea tambien su perfil funcional relacionado.
+- El autorregistro publico en `/registro` reutiliza el mismo flujo seguro y limita los roles a `ORGANIZADOR` y `PARTICIPANTE`.
 - `ORGANIZADOR`: se crea desde `/organizadores/crear`. El formulario genera automaticamente su cuenta de usuario y su par de llaves RSA.
 - `PARTICIPANTE`: se crea automaticamente y de forma transparente cuando:
   - Se registra un equipo (`/equipos/crear`), usando los datos del representante.
