@@ -85,4 +85,55 @@ final class PublicController extends Controller
         $this->flashSuccess('¡Gracias! Tu mensaje fue enviado, te contactaremos pronto.');
         $this->redirect('/#contacto');
     }
+
+    public function registro(): void
+    {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        $this->render(
+            'public/registro',
+            [
+                'csrf' => $_SESSION['csrf_token'],
+                'errores' => $this->getErrors(),
+                'exito' => $this->getSuccess()
+            ],
+            'layout/guest'
+        );
+    }
+
+        public function registroParticipanteForm(): void
+    {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        $this->render(
+            'public/registro_participante',
+            [
+                'csrf' => $_SESSION['csrf_token'],
+                'errores' => $this->getErrors(),
+                'exito' => $this->getSuccess(),
+            ],
+            'layout/guest'
+        );
+    }
+
+    public function registroOrganizadorForm(): void
+    {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        $this->render(
+            'public/registro_organizador',
+            [
+                'csrf' => $_SESSION['csrf_token'],
+                'errores' => $this->getErrors(),
+                'exito' => $this->getSuccess(),
+            ],
+            'layout/guest'
+        );
+    }
 }

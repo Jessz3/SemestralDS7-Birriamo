@@ -45,6 +45,32 @@ final class Participante extends Model
         return $this->db->query($sql)->fetchAll();
     }
 
+    public function crear(int $usuarioId, ?string $cedula, ?string $fechaNacimiento): int
+    {
+        $stmt = $this->db->prepare(
+            'INSERT INTO participantes
+            (
+                usuario_id,
+                cedula,
+                fecha_nacimiento
+            )
+            VALUES
+            (
+                :usuario_id,
+                :cedula,
+                :fecha_nacimiento
+            )'
+        );
+
+        $stmt->execute([
+            'usuario_id' => $usuarioId,
+            'cedula' => $cedula,
+            'fecha_nacimiento' => $fechaNacimiento
+        ]);
+
+        return (int)$this->db->lastInsertId();
+    }
+
     /**
      * Busca un participante por correo; si no existe, crea la cuenta de
      * usuario (rol PARTICIPANTE, con contrasena generada aleatoriamente

@@ -148,6 +148,15 @@ $router->post('/configuracion/actualizar', 'ConfiguracionController', 'actualiza
 $router->get('/configuracion/mensajes', 'ConfiguracionController', 'mensajes');
 $router->get('/configuracion/mensajes/leido', 'ConfiguracionController', 'marcarLeido');
 
+// ---------- Registro Publico ----------
+$router->get('/registro', 'PublicController', 'registro');
+
+$router->get('/registro/participante', 'PublicController', 'registroParticipanteForm');
+$router->post('/registro/participante', 'AuthController', 'registrarParticipante');
+
+$router->get('/registro/organizador', 'PublicController', 'registroOrganizadorForm');
+$router->post('/registro/organizador', 'AuthController', 'registrarOrganizador');
+
 // ---------- Pagina publica ----------
 $router->get('/', 'PublicController', 'inicio');
 $router->post('/contacto', 'PublicController', 'contacto');

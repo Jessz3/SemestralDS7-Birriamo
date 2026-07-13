@@ -16,6 +16,7 @@
         <a href="<?= BASE_URL ?>/#stack">Stack</a>
         <a href="<?= BASE_URL ?>/#contacto">Contactenos</a>
         <a href="<?= BASE_URL ?>/login">Iniciar sesion</a>
+        <a href="<?= BASE_URL ?>/registro">Registrarse</a>
     </div>
 </nav>
 
