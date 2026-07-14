@@ -1,3 +1,5 @@
+<script src="<?= BASE_URL ?>/assets/js/password-toggle.js"></script>
+
 <div class="container" style="max-width:640px;">
     <div class="page-head">
         <div>
@@ -50,16 +52,27 @@
             </div>
 
             <div class="grid-2">
-                <div class="field">
-                    <label>Contrasena</label>
-                    <input type="password" name="password" required>
-                    <p class="field-hint">Minimo 8 caracteres, con mayuscula y numero.</p>
-                </div>
-                <div class="field">
-                    <label>Frase de seguridad de llave privada</label>
-                    <input type="password" name="passphrase_llave" required>
-                    <p class="field-hint">Protege la llave RSA privada del usuario (no repudio). Solo el usuario debe conocerla.</p>
-                </div>
+                <!--Sección de entrada de contraseña con toggle-->
+                <?php
+                $id='password';
+                $name='password';
+                $label='Contraseña';
+
+                $hint='Mínimo 8 caracteres, con mayúscula y número.';
+
+                require ROOT_PATH.'/views/components/password-input.php';
+                ?>
+
+                <!--Sección de entrada de frase de seguridad con toggle-->
+                <?php
+                $id='passphrase_llave';
+                $name='passphrase_llave';
+                $label='Frase de seguridad de la llave privada';
+
+                $hint='Protege la llave RSA privada del usuario (no repudio). Solo el usuario debe conocerla.';
+
+                require ROOT_PATH.'/views/components/password-input.php';
+                ?>
             </div>
 
             <button type="submit" class="btn btn-primary"><?= htmlspecialchars($textoBoton) ?></button>
@@ -67,3 +80,4 @@
         </form>
     </div>
 </div>
+
