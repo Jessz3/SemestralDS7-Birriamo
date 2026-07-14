@@ -72,6 +72,5 @@
             <div class="field"><label>Mensaje</label><textarea name="mensaje" rows="4" required></textarea></div>
             <button type="submit" class="btn btn-primary">Enviar mensaje</button>
         </form>
-        <p class="field-hint" style="margin-top:1rem;">También puedes escribirnos a fisc<?= '' ?>@utp.ac.pa o llamar al (507) 560-3000.</p>
     </div>
 </section>

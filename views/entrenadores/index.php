@@ -8,7 +8,7 @@
 
     <div class="card">
         <table class="data-table">
-            <thead><tr><th>Nombre</th><th>Correo</th><th>Telefono</th><th>Academia</th><th>Anos de experiencia</th></tr></thead>
+            <thead><tr><th>Nombre</th><th>Correo</th><th>Telefono</th><th>Academia</th><th>Años de experiencia</th></tr></thead>
             <tbody>
                 <?php foreach ($entrenadores as $e): ?>
                     <tr>

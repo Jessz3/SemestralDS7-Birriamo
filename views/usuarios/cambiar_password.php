@@ -1,8 +1,10 @@
+<script src="<?= BASE_URL ?>/assets/js/password-toggle.js"></script>
+
 <div class="container" style="max-width:480px;">
     <div class="page-head">
         <div>
             <div class="eyebrow">Mi cuenta</div>
-            <h1>Cambiar contrasena</h1>
+            <h1>Cambiar contraseña</h1>
         </div>
     </div>
 
@@ -12,20 +14,34 @@
         <form method="POST" action="/mi-cuenta/password">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
 
-            <div class="field">
-                <label>Contrasena actual</label>
-                <input type="password" name="password_actual" required>
-            </div>
-            <div class="field">
-                <label>Nueva contrasena</label>
-                <input type="password" name="password_nueva" required>
-            </div>
-            <div class="field">
-                <label>Confirmar nueva contrasena</label>
-                <input type="password" name="password_confirmacion" required>
-            </div>
+            <!--Sección de entrada de contraseña con toggle-->
+            <?php
+            $id='password_actual';
+            $name='password_actual';
+            $label='Contraseña actual';
 
-            <button type="submit" class="btn btn-primary">Actualizar contrasena</button>
+            require ROOT_PATH.'/views/components/password-input.php';
+            ?>
+
+            <!--Sección de entrada de nueva contraseña con toggle-->
+            <?php
+            $id='password_nueva';
+            $name='password_nueva';
+            $label='Nueva contraseña';
+
+            require ROOT_PATH.'/views/components/password-input.php';
+            ?>
+
+            <!--Sección de entrada de confirmación de nueva contraseña con toggle-->
+            <?php
+            $id='password_confirmacion';
+            $name='password_confirmacion';
+            $label='Confirmar nueva contraseña';
+
+            require ROOT_PATH.'/views/components/password-input.php';
+            ?>
+
+            <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
         </form>
     </div>
 </div>

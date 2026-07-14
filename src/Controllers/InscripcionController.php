@@ -182,7 +182,7 @@ final class InscripcionController extends Controller
 
     /**
      * Endpoint publico: un participante externo se inscribe sin necesidad
-     * de iniciar sesion. Se crea (o reutiliza) su cuenta de PARTICIPANTE,
+     * de iniciar sesión. Se crea (o reutiliza) su cuenta de PARTICIPANTE,
      * se registra el pago como aprobado, y se emite la factura de inmediato.
      */
     public function inscribirIndividual(): void
@@ -223,9 +223,9 @@ final class InscripcionController extends Controller
             fn() => Validaciones::email($datos['correo']),
             fn() => Validaciones::rangoNumerico((float) $datos['edad'], 5, 100, 'edad'),
             fn() => $actividad && !empty($actividad['edad_minima']) && $datos['edad'] < $actividad['edad_minima']
-                ? 'La edad minima para esta actividad es ' . $actividad['edad_minima'] . ' anos.' : null,
+                ? 'La edad minima para esta actividad es ' . $actividad['edad_minima'] . ' años.' : null,
             fn() => $actividad && !empty($actividad['edad_maxima']) && $datos['edad'] > $actividad['edad_maxima']
-                ? 'La edad maxima para esta actividad es ' . $actividad['edad_maxima'] . ' anos.' : null,
+                ? 'La edad maxima para esta actividad es ' . $actividad['edad_maxima'] . ' años.' : null,
             fn() => $actividad && $actividadModelo->cuposOcupados($actividadId) >= (int) $actividad['cupos_disponibles']
                 ? 'El cupo maximo de la actividad ha sido alcanzado.' : null,
         ]);
