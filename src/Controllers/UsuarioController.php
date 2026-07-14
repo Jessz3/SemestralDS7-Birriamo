@@ -131,6 +131,7 @@ final class UsuarioController extends Controller
             fn() => Validaciones::enLista($datos['rol'], $rolesPermitidos, 'rol'),
             fn() => Validaciones::passwordSegura($datos['password']),
             fn() => Validaciones::requerido($datos['passphrase_llave'], 'frase de seguridad de la llave privada'),
+            fn() => Validaciones::longitud($datos['passphrase_llave'], 1, 12, 'frase de seguridad de la llave privada'),
             fn() => $modelo->correoExiste($datos['correo']) ? 'Ya existe un usuario con ese correo.' : null,
             fn() => $modelo->usuarioExiste($datos['usuario']) ? 'Ya existe ese nombre de usuario.' : null,
         ]);
@@ -280,6 +281,7 @@ final class UsuarioController extends Controller
     public function deshabilitar(): void
     {
         $this->requireRole('ADMINISTRADOR');
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new Usuario())->cambiarEstado($id, false);
         $this->flashSuccess('Usuario deshabilitado.');
@@ -289,6 +291,7 @@ final class UsuarioController extends Controller
     public function habilitar(): void
     {
         $this->requireRole('ADMINISTRADOR');
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new Usuario())->cambiarEstado($id, true);
         $this->flashSuccess('Usuario habilitado.');

@@ -250,6 +250,7 @@ final class ActividadController extends Controller
     public function publicar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new Actividad())->publicar($id);
         (new Bitacora())->registrar((int) $_SESSION['usuario_id'], 'ACTIVIDADES', 'PUBLICAR', 'actividades', (string) $id, 'Actividad publicada.');
@@ -260,6 +261,7 @@ final class ActividadController extends Controller
     public function cerrarInscripciones(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new Actividad())->cerrarInscripciones($id);
         $this->flashSuccess('Inscripciones cerradas.');
@@ -269,6 +271,7 @@ final class ActividadController extends Controller
     public function finalizar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new Actividad())->finalizar($id);
         (new Bitacora())->registrar((int) $_SESSION['usuario_id'], 'ACTIVIDADES', 'FINALIZAR', 'actividades', (string) $id, 'Actividad finalizada.');

@@ -60,8 +60,8 @@
 
             <div class="field">
                 <label>Frase de seguridad de llave privada</label>
-                <input type="password" name="passphrase_llave" required>
-                <p class="field-hint">Protege la llave RSA privada del organizador. Solo el organizador debe conocerla.</p>
+                <input type="password" name="passphrase_llave" maxlength="12" required>
+                <p class="field-hint">Protege la llave RSA privada del organizador. Solo el organizador debe conocerla. Maximo 12 caracteres.</p>
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar</button>

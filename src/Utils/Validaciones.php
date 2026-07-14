@@ -86,6 +86,9 @@ final class Validaciones
         if (mb_strlen($valor) < 8) {
             return 'La contraseña debe tener al menos 8 caracteres.';
         }
+        if (mb_strlen($valor) > 12) {
+            return 'La contraseña debe tener como maximo 12 caracteres.';
+        }
         if (!preg_match('/[A-Z]/', $valor) || !preg_match('/[0-9]/', $valor)) {
             return 'La contraseña debe incluir al menos una mayuscula y un numero.';
         }

@@ -113,6 +113,7 @@ final class InstalacionController extends Controller
     public function deshabilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Instalacion())->cambiarEstado((int) ($_GET['id'] ?? 0), false);
         $this->redirect('/instalaciones');
     }
@@ -120,6 +121,7 @@ final class InstalacionController extends Controller
     public function habilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Instalacion())->cambiarEstado((int) ($_GET['id'] ?? 0), true);
         $this->redirect('/instalaciones');
     }

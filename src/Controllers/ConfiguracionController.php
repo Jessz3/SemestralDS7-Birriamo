@@ -51,6 +51,7 @@ final class ConfiguracionController extends Controller
     public function marcarLeido(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new MensajeContacto())->marcarLeido($id, (int) $_SESSION['usuario_id']);
         $this->redirect('/configuracion/mensajes');

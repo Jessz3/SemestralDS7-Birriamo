@@ -18,7 +18,7 @@
                         <td><?= htmlspecialchars($m['fecha_envio']) ?></td>
                         <td>
                             <?php if ($m['estado'] === 'NUEVO'): ?>
-                                <a class="btn btn-outline btn-sm" href="/configuracion/mensajes/leido?id=<?= (int) $m['id'] ?>">Marcar leido</a>
+                                <a class="btn btn-outline btn-sm" href="/configuracion/mensajes/leido?id=<?= (int) $m['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Marcar leido</a>
                             <?php endif; ?>
                         </td>
                     </tr>

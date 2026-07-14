@@ -188,6 +188,7 @@ final class EquipoController extends Controller
     public function eliminarJugador(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $equipoId = (int) ($_GET['equipo_id'] ?? 0);
         $this->verificarPropiedadParticipante($equipoId);
         (new Equipo())->eliminarJugador((int) ($_GET['jugador_id'] ?? 0), $equipoId);

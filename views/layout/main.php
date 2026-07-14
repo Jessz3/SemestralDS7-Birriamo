@@ -32,7 +32,7 @@
         <span class="spacer"></span>
         <?php if (!empty($_SESSION['usuario_nombre'])): ?>
             <a class="nav-user" href="<?= BASE_URL ?>/mi-cuenta/password">👤 <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></a>
-            <a href="<?= BASE_URL ?>/logout">Cerrar sesión</a>
+            <a href="<?= BASE_URL ?>/logout?csrf_token=<?= urlencode($csrf) ?>">Cerrar sesión</a>
         <?php endif; ?>
     </nav>
 </header>

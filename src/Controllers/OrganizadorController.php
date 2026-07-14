@@ -154,6 +154,7 @@ final class OrganizadorController extends Controller
     public function verificar(): void
     {
         $this->requireRole('ADMINISTRADOR');
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         (new Organizador())->verificar($id, (int) $_SESSION['usuario_id']);
         $this->flashSuccess('Organizador verificado.');
@@ -163,6 +164,7 @@ final class OrganizadorController extends Controller
     public function deshabilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Organizador())->cambiarEstado((int) ($_GET['id'] ?? 0), false);
         $this->redirect('/organizadores');
     }
@@ -170,6 +172,7 @@ final class OrganizadorController extends Controller
     public function habilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Organizador())->cambiarEstado((int) ($_GET['id'] ?? 0), true);
         $this->redirect('/organizadores');
     }

@@ -29,9 +29,9 @@
                         <td>
                             <a class="btn btn-outline btn-sm" href="/deportes/editar?id=<?= (int) $d['id'] ?>">Editar</a>
                             <?php if ((int) $d['activo'] === 1): ?>
-                                <a class="btn btn-danger btn-sm" href="/deportes/deshabilitar?id=<?= (int) $d['id'] ?>">Deshabilitar</a>
+                                <a class="btn btn-danger btn-sm" href="/deportes/deshabilitar?id=<?= (int) $d['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Deshabilitar</a>
                             <?php else: ?>
-                                <a class="btn btn-primary btn-sm" href="/deportes/habilitar?id=<?= (int) $d['id'] ?>">Habilitar</a>
+                                <a class="btn btn-primary btn-sm" href="/deportes/habilitar?id=<?= (int) $d['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Habilitar</a>
                             <?php endif; ?>
                         </td>
                     </tr>

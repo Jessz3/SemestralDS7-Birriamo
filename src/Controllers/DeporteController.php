@@ -108,6 +108,7 @@ final class DeporteController extends Controller
     public function deshabilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Deporte())->cambiarEstado((int) ($_GET['id'] ?? 0), false);
         $this->redirect('/deportes');
     }
@@ -115,6 +116,7 @@ final class DeporteController extends Controller
     public function habilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Deporte())->cambiarEstado((int) ($_GET['id'] ?? 0), true);
         $this->redirect('/deportes');
     }

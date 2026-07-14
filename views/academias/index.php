@@ -23,9 +23,9 @@
                         <td>
                             <a class="btn btn-outline btn-sm" href="/academias/editar?id=<?= (int) $a['id'] ?>">Editar</a>
                             <?php if ((int) $a['activo'] === 1): ?>
-                                <a class="btn btn-danger btn-sm" href="/academias/deshabilitar?id=<?= (int) $a['id'] ?>">Deshabilitar</a>
+                                <a class="btn btn-danger btn-sm" href="/academias/deshabilitar?id=<?= (int) $a['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Deshabilitar</a>
                             <?php else: ?>
-                                <a class="btn btn-primary btn-sm" href="/academias/habilitar?id=<?= (int) $a['id'] ?>">Habilitar</a>
+                                <a class="btn btn-primary btn-sm" href="/academias/habilitar?id=<?= (int) $a['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Habilitar</a>
                             <?php endif; ?>
                         </td>
                     </tr>

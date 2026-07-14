@@ -31,9 +31,9 @@
                         <td>
                             <a class="btn btn-outline btn-sm" href="/usuarios/editar?id=<?= (int) $u['id'] ?>">Editar</a>
                             <?php if ((int) $u['activo'] === 1): ?>
-                                <a class="btn btn-danger btn-sm" href="/usuarios/deshabilitar?id=<?= (int) $u['id'] ?>" onclick="return confirm('¿Deshabilitar este usuario?')">Deshabilitar</a>
+                                <a class="btn btn-danger btn-sm" href="/usuarios/deshabilitar?id=<?= (int) $u['id'] ?>&csrf_token=<?= urlencode($csrf) ?>" onclick="return confirm('¿Deshabilitar este usuario?')">Deshabilitar</a>
                             <?php else: ?>
-                                <a class="btn btn-primary btn-sm" href="/usuarios/habilitar?id=<?= (int) $u['id'] ?>">Habilitar</a>
+                                <a class="btn btn-primary btn-sm" href="/usuarios/habilitar?id=<?= (int) $u['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Habilitar</a>
                             <?php endif; ?>
                         </td>
                     </tr>

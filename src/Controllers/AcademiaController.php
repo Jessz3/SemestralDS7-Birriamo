@@ -101,6 +101,7 @@ final class AcademiaController extends Controller
     public function deshabilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Academia())->cambiarEstado((int) ($_GET['id'] ?? 0), false);
         $this->redirect('/academias');
     }
@@ -108,6 +109,7 @@ final class AcademiaController extends Controller
     public function habilitar(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         (new Academia())->cambiarEstado((int) ($_GET['id'] ?? 0), true);
         $this->redirect('/academias');
     }

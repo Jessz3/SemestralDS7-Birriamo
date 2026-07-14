@@ -13,6 +13,7 @@
 
 $required = $required ?? true;
 $hint = $hint ?? '';
+$maxLength = $maxLength ?? 12;
 ?>
 
 <div class="field">
@@ -26,6 +27,7 @@ $hint = $hint ?? '';
             type="password"
             id="<?= htmlspecialchars($id) ?>"
             name="<?= htmlspecialchars($name) ?>"
+            maxlength="<?= (int) $maxLength ?>"
             <?= $required ? 'required' : '' ?>
         >
 

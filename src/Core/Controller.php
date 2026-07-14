@@ -12,6 +12,7 @@ abstract class Controller
 {
     protected function render(string $view, array $data = [], string $layout = 'layout/main'): void
     {
+        $csrf = $this->csrfToken();
         extract($data, EXTR_SKIP);
         $viewPath = __DIR__ . "/../../views/{$view}.php";
 
@@ -69,14 +70,24 @@ abstract class Controller
         }
     }
 
-    protected function verifyCsrf(): void
+    protected function verifyCsrf(?string $token = null): void
     {
-        $token = $_POST['csrf_token'] ?? '';
-        if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+        $token ??= $_POST['csrf_token'] ?? '';
+        $expected = $this->csrfToken();
+        if (!hash_equals($expected, $token)) {
             http_response_code(419);
             echo 'Token CSRF invalido. Recargue el formulario e intente nuevamente.';
             exit;
         }
+    }
+
+    protected function csrfToken(): string
+    {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        return $_SESSION['csrf_token'];
     }
 
     protected function oldInput(): array

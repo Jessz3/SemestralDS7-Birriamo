@@ -18,7 +18,7 @@
                         <td><?= htmlspecialchars($o['academia_nombre'] ?? '-') ?></td>
                         <td>
                             <?php if ((int) $o['verificado'] === 1): ?><span class="badge badge-success">Verificado</span>
-                            <?php else: ?><a class="btn btn-outline btn-sm" href="/organizadores/verificar?id=<?= (int) $o['id'] ?>">Verificar</a><?php endif; ?>
+                            <?php else: ?><a class="btn btn-outline btn-sm" href="/organizadores/verificar?id=<?= (int) $o['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Verificar</a><?php endif; ?>
                         </td>
                         <td>
                             <?php if ((int) $o['activo'] === 1): ?><span class="badge badge-success">Activo</span>
@@ -27,9 +27,9 @@
                         <td>
                             <a class="btn btn-outline btn-sm" href="/organizadores/editar?id=<?= (int) $o['id'] ?>">Editar</a>
                             <?php if ((int) $o['activo'] === 1): ?>
-                                <a class="btn btn-danger btn-sm" href="/organizadores/deshabilitar?id=<?= (int) $o['id'] ?>">Deshabilitar</a>
+                                <a class="btn btn-danger btn-sm" href="/organizadores/deshabilitar?id=<?= (int) $o['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Deshabilitar</a>
                             <?php else: ?>
-                                <a class="btn btn-primary btn-sm" href="/organizadores/habilitar?id=<?= (int) $o['id'] ?>">Habilitar</a>
+                                <a class="btn btn-primary btn-sm" href="/organizadores/habilitar?id=<?= (int) $o['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Habilitar</a>
                             <?php endif; ?>
                         </td>
                     </tr>

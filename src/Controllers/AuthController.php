@@ -104,6 +104,7 @@ final class AuthController extends Controller
 
     public function logout(): void
     {
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $_SESSION = [];
         session_destroy();
         session_start();

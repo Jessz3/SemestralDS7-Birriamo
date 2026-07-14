@@ -58,7 +58,7 @@
                 $name='password';
                 $label='Contraseña';
 
-                $hint='Mínimo 8 caracteres, con mayúscula y número.';
+                $hint='Entre 8 y 12 caracteres, con mayúscula y número.';
 
                 require ROOT_PATH.'/views/components/password-input.php';
                 ?>
@@ -69,7 +69,7 @@
                 $name='passphrase_llave';
                 $label='Frase de seguridad de la llave privada';
 
-                $hint='Protege la llave RSA privada del usuario (no repudio). Solo el usuario debe conocerla.';
+                $hint='Protege la llave RSA privada del usuario (maximo 12 caracteres). Solo el usuario debe conocerla.';
 
                 require ROOT_PATH.'/views/components/password-input.php';
                 ?>

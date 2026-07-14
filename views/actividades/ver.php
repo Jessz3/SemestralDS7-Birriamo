@@ -28,13 +28,13 @@
 
             <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">
                 <?php if ($actividad['estado'] === 'BORRADOR'): ?>
-                    <a class="btn btn-amber btn-sm" href="/actividades/publicar?id=<?= (int) $actividad['id'] ?>">Publicar</a>
+                    <a class="btn btn-amber btn-sm" href="/actividades/publicar?id=<?= (int) $actividad['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Publicar</a>
                 <?php elseif ($actividad['estado'] === 'PUBLICADA'): ?>
-                    <a class="btn btn-outline btn-sm" href="/actividades/cerrar-inscripciones?id=<?= (int) $actividad['id'] ?>">Cerrar inscripciones</a>
-                    <a class="btn btn-danger btn-sm" href="/actividades/cancelar?id=<?= (int) $actividad['id'] ?>">Cancelar actividad</a>
+                    <a class="btn btn-outline btn-sm" href="/actividades/cerrar-inscripciones?id=<?= (int) $actividad['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Cerrar inscripciones</a>
+                    <a class="btn btn-danger btn-sm" href="/actividades/cancelar?id=<?= (int) $actividad['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Cancelar actividad</a>
                 <?php elseif ($actividad['estado'] === 'CERRADA'): ?>
-                    <a class="btn btn-primary btn-sm" href="/actividades/finalizar?id=<?= (int) $actividad['id'] ?>">Finalizar actividad</a>
-                    <a class="btn btn-danger btn-sm" href="/actividades/cancelar?id=<?= (int) $actividad['id'] ?>">Cancelar actividad</a>
+                    <a class="btn btn-primary btn-sm" href="/actividades/finalizar?id=<?= (int) $actividad['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Finalizar actividad</a>
+                    <a class="btn btn-danger btn-sm" href="/actividades/cancelar?id=<?= (int) $actividad['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Cancelar actividad</a>
                 <?php endif; ?>
                 <a class="btn btn-outline btn-sm" href="/actividades/incidente/crear?id=<?= (int) $actividad['id'] ?>">Reportar incidente</a>
             </div>
@@ -90,8 +90,8 @@
                                 </td>
                                 <td>
                                     <?php if ($ie['estado'] === 'PENDIENTE_APROBACION'): ?>
-                                        <a class="btn btn-primary btn-sm" href="/inscripciones/equipo/aprobar?id=<?= (int) $ie['id'] ?>">Aprobar</a>
-                                        <a class="btn btn-danger btn-sm" href="/inscripciones/equipo/rechazar?id=<?= (int) $ie['id'] ?>">Rechazar</a>
+                                        <a class="btn btn-primary btn-sm" href="/inscripciones/equipo/aprobar?id=<?= (int) $ie['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Aprobar</a>
+                                        <a class="btn btn-danger btn-sm" href="/inscripciones/equipo/rechazar?id=<?= (int) $ie['id'] ?>&csrf_token=<?= urlencode($csrf) ?>">Rechazar</a>
                                     <?php endif; ?>
                                 </td>
                             </tr>

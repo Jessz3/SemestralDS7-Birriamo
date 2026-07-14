@@ -97,6 +97,7 @@ final class InscripcionController extends Controller
     public function aprobarEquipo(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         $inscripcionModelo = new InscripcionEquipo();
         $inscripcion = $inscripcionModelo->buscarPorId($id);
@@ -140,6 +141,7 @@ final class InscripcionController extends Controller
     public function rechazarEquipo(): void
     {
         $this->requireAuth();
+        $this->verifyCsrf($_GET['csrf_token'] ?? null);
         $id = (int) ($_GET['id'] ?? 0);
         $inscripcion = (new InscripcionEquipo())->buscarPorId($id);
         (new InscripcionEquipo())->rechazar($id);

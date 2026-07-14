@@ -74,7 +74,7 @@
                             <td><?= $j['peso_kg'] ? htmlspecialchars($j['peso_kg']) . ' kg' : '-' ?></td>
                             <td><?= htmlspecialchars($j['posicion'] ?? '-') ?></td>
                             <td>
-                                <a class="btn btn-danger btn-sm" href="/equipos/jugadores/eliminar?equipo_id=<?= (int) $equipo['id'] ?>&jugador_id=<?= (int) $j['id'] ?>" onclick="return confirm('¿Eliminar jugador?')">Eliminar</a>
+                                <a class="btn btn-danger btn-sm" href="/equipos/jugadores/eliminar?equipo_id=<?= (int) $equipo['id'] ?>&jugador_id=<?= (int) $j['id'] ?>&csrf_token=<?= urlencode($csrf) ?>" onclick="return confirm('¿Eliminar jugador?')">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
