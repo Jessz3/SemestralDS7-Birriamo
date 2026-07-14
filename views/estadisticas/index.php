@@ -1,9 +1,21 @@
 <?php
+$resumen = $resumen ?? [
+    'totalActividades' => 0,
+    'totalIncidentes' => 0,
+    'totalRecaudado' => 0,
+    'totalEquipos' => 0,
+    'totalInscripciones' => 0,
+];
+$porDeporte = $porDeporte ?? [];
+$rankingArbitros = $rankingArbitros ?? [];
+$incidentesPorTipo = $incidentesPorTipo ?? [];
+$recaudacionPorMes = $recaudacionPorMes ?? [];
+
 $maxDeporte = max(array_column($porDeporte, 'total') ?: [1]) ?: 1;
 $maxRecaudo = max(array_column($recaudacionPorMes, 'total') ?: [1]) ?: 1;
 ?>
 <div class="container">
-    <div class="page-head"><div><div class="eyebrow">Analitica</div><h1>Estadisticas del Sistema</h1></div></div>
+    <div class="page-head"><div><div class="eyebrow">Analitica</div><h1>Estadisticas <?= htmlspecialchars($alcanceEstadisticas ?? 'del Sistema') ?></h1></div></div>
 
     <div class="grid-4">
         <div class="stat-card"><div class="value"><?= (int) $resumen['totalActividades'] ?></div><div class="label">Actividades</div></div>

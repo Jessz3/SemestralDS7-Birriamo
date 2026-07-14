@@ -1,7 +1,17 @@
 <div class="container">
+    <?php
+    $resumen = $resumen ?? [
+        'totalActividades' => 0,
+        'actividadesFinalizadas' => 0,
+        'totalRecaudado' => 0,
+        'totalInscripciones' => 0,
+    ];
+    $mensajesNuevos = $mensajesNuevos ?? 0;
+    ?>
+
     <div class="page-head">
         <div>
-            <div class="eyebrow">Panel general</div>
+            <div class="eyebrow"><?= htmlspecialchars($alcancePanel ?? 'Panel general') ?></div>
             <h1>Bienvenido, <?= htmlspecialchars($_SESSION['usuario_nombre'] ?? '') ?></h1>
         </div>
     </div>

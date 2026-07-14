@@ -11,6 +11,7 @@ use App\Models\Estadistica;
 use App\Models\InscripcionEquipo;
 use App\Models\InscripcionIndividual;
 use App\Models\MensajeContacto;
+use App\Models\Organizador;
 use App\Models\Participante;
 
 final class HomeController extends Controller
@@ -36,9 +37,25 @@ final class HomeController extends Controller
             return;
         }
 
+        if (($_SESSION['usuario_rol'] ?? '') === 'ORGANIZADOR') {
+            $organizador = (new Organizador())->buscarPorUsuarioId((int) $_SESSION['usuario_id']);
+            if (!$organizador) {
+                throw new \RuntimeException('La cuenta no tiene un perfil de organizador asociado.');
+            }
+
+            $organizadorId = (int) $organizador['id'];
+            $this->render('public/dashboard', [
+                'resumen' => (new Estadistica())->resumenGeneral($organizadorId),
+                'mensajesNuevos' => count(array_filter((new MensajeContacto())->todos(), static fn($m) => $m['estado'] === 'NUEVO')),
+                'alcancePanel' => 'Tu panel de organizador',
+            ]);
+            return;
+        }
+
         $this->render('public/dashboard', [
             'resumen' => (new Estadistica())->resumenGeneral(),
             'mensajesNuevos' => count(array_filter((new MensajeContacto())->todos(), static fn($m) => $m['estado'] === 'NUEVO')),
+            'alcancePanel' => 'Panel general',
         ]);
     }
 }

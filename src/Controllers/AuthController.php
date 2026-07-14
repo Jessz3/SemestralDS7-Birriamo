@@ -75,7 +75,11 @@ final class AuthController extends Controller
         $hasher = new HashPasswordService();
         if (!$hasher->verificar($password, $registro['password_hash'])) {
             $modelo->registrarIntentoFallido((int) $registro['id']);
-            $this->flashErrors([$mensajeGenerico]);
+            $registroActualizado = $modelo->buscarPorId((int) $registro['id']);
+            $mensaje = !empty($registroActualizado['bloqueado_hasta']) && strtotime($registroActualizado['bloqueado_hasta']) > time()
+                ? 'Cuenta bloqueada temporalmente por multiples intentos fallidos. Intente en 15 minutos.'
+                : $mensajeGenerico;
+            $this->flashErrors([$mensaje]);
             $this->redirect('/login');
         }
 
