@@ -37,12 +37,10 @@
     </nav>
 </header>
 
-<main>
+<main class="main-content">
     <?= $content ?>
 </main>
 
-<footer class="site-footer">
-    Universidad Tecnologica de Panama &middot; Desarrollo de Software VII &middot; Sistema de Eventos Deportivos &copy; <?= date('Y') ?>
-</footer>
+<?php require ROOT_PATH . '/views/layout/footer.php'; ?>
 </body>
 </html>
