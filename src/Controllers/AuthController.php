@@ -43,7 +43,7 @@ final class AuthController extends Controller
 
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($usuarioInput, 'usuario'),
-            fn() => Validaciones::requerido($password, 'contrasena'),
+            fn() => Validaciones::requerido($password, 'contraseña'),
         ]);
 
         if (!empty($errores)) {
@@ -55,7 +55,7 @@ final class AuthController extends Controller
         $registro = $modelo->buscarPorUsuario($usuarioInput);
 
         // Mensaje generico intencional (no revelar si el usuario existe o no).
-        $mensajeGenerico = 'Usuario o contrasena incorrectos.';
+        $mensajeGenerico = 'Usuario o contraseña incorrectos.';
 
         if (!$registro) {
             $this->flashErrors([$mensajeGenerico]);
@@ -92,7 +92,7 @@ final class AuthController extends Controller
             'LOGIN',
             'usuarios',
             (string) $registro['id'],
-            'Inicio de sesion exitoso.'
+            'Inicio de sesión exitoso.'
         );
 
         if ((int) $registro['requiere_cambio_password'] === 1) {

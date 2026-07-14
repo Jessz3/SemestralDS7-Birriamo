@@ -84,10 +84,10 @@ final class Validaciones
     public static function passwordSegura(string $valor): ?string
     {
         if (mb_strlen($valor) < 8) {
-            return 'La contrasena debe tener al menos 8 caracteres.';
+            return 'La contraseña debe tener al menos 8 caracteres.';
         }
         if (!preg_match('/[A-Z]/', $valor) || !preg_match('/[0-9]/', $valor)) {
-            return 'La contrasena debe incluir al menos una mayuscula y un numero.';
+            return 'La contraseña debe incluir al menos una mayuscula y un numero.';
         }
         return null;
     }

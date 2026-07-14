@@ -2,7 +2,7 @@
 
 <div class="hero" style="padding-bottom:2rem;">
     <span class="badge-dot" style="display:inline-block;width:10px;height:10px;border-radius:50%;margin-bottom:.5rem;"></span>
-    <h1>Iniciar Sesion</h1>
+    <h1>Iniciar sesión</h1>
     <p>Acceso administrativo y operativo del Sistema de Eventos Deportivos.</p>
 </div>
 
@@ -31,10 +31,6 @@
 
         <p style="margin-top:1rem;text-align:center;">
             ¿No tiene una cuenta? <a href="<?= BASE_URL ?>/registro">Regístrese como organizador o participante</a>
-        </p>
-
-        <p class="field-hint" style="margin-top:1rem;text-align:center;">
-            Usuario de prueba: <code>admin</code> — contrasena <code>Admin123</code>
         </p>
     </div>
 </div>

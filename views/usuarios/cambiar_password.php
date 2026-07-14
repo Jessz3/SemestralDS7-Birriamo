@@ -4,7 +4,7 @@
     <div class="page-head">
         <div>
             <div class="eyebrow">Mi cuenta</div>
-            <h1>Cambiar contrasena</h1>
+            <h1>Cambiar contraseña</h1>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
             require ROOT_PATH.'/views/components/password-input.php';
             ?>
 
-            <button type="submit" class="btn btn-primary">Actualizar contrasena</button>
+            <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
         </form>
     </div>
 </div>
