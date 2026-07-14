@@ -99,7 +99,7 @@ final class UsuarioController extends Controller
         $this->verifyCsrf();
         $this->procesarCreacion(Usuario::ROLES_REGISTRO, '/registro', null);
 
-        $this->flashSuccess('Cuenta creada correctamente. Ya puede iniciar sesion.');
+        $this->flashSuccess('Cuenta creada correctamente. Ya puede iniciar sesión.');
         $this->redirect('/login');
     }
 
@@ -206,7 +206,7 @@ final class UsuarioController extends Controller
         }
     }
 
-    /** Evita conservar contrasenas o frases privadas en la sesion flash. */
+    /** Evita conservar contraseñas o frases privadas en la sesión flash. */
     private function datosReutilizables(array $datos): array
     {
         unset($datos['password'], $datos['passphrase_llave']);
@@ -318,9 +318,9 @@ final class UsuarioController extends Controller
         $hasher = new HashPasswordService();
 
         $errores = Validaciones::validar([
-            fn() => !$hasher->verificar($actual, $usuario['password_hash']) ? 'La contrasena actual es incorrecta.' : null,
+            fn() => !$hasher->verificar($actual, $usuario['password_hash']) ? 'La contraseña actual es incorrecta.' : null,
             fn() => Validaciones::passwordSegura($nueva),
-            fn() => $nueva !== $confirmacion ? 'La confirmacion no coincide con la nueva contrasena.' : null,
+            fn() => $nueva !== $confirmacion ? 'La confirmacion no coincide con la nueva contraseña.' : null,
         ]);
 
         if (!empty($errores)) {
@@ -332,7 +332,7 @@ final class UsuarioController extends Controller
         $modelo->actualizarPassword((int) $usuario['id'], $nuevoHash);
         (new HistorialPassword())->registrar((int) $usuario['id'], $nuevoHash);
 
-        $this->flashSuccess('Contrasena actualizada correctamente.');
+        $this->flashSuccess('contraseña actualizada correctamente.');
         $this->redirect('/dashboard');
     }
 }

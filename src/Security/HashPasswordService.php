@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 /**
- * Implementacion del contrato de seguridad para hashing de contrasenas
+ * Implementacion del contrato de seguridad para hashing de contraseñas
  * usando el algoritmo BCRYPT nativo de PHP (password_hash / password_verify).
  */
 final class HashPasswordService implements TransformadorSeguridadInterface

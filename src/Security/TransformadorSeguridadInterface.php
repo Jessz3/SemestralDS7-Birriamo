@@ -6,7 +6,7 @@ namespace App\Security;
 
 /**
  * Contrato (Programacion por Interfaces) que unifica los servicios
- * criptograficos de la aplicacion. Tanto el hashing de contrasenas
+ * criptograficos de la aplicacion. Tanto el hashing de contraseñas
  * como la firma digital de registros implementan este mismo contrato,
  * desacoplando la logica de negocio del algoritmo especifico usado.
  *
@@ -16,7 +16,7 @@ interface TransformadorSeguridadInterface
 {
     /**
      * Transforma (protege/firma) un dato de entrada.
-     * Para hashing de contrasenas, $llave se ignora.
+     * Para hashing de contraseñas, $llave se ignora.
      * Para firmas digitales, $llave es la llave privada o secreta.
      */
     public function proteger(string $dato, ?string $llave = null): string;

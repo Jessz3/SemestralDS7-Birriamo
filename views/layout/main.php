@@ -32,17 +32,15 @@
         <span class="spacer"></span>
         <?php if (!empty($_SESSION['usuario_nombre'])): ?>
             <a class="nav-user" href="<?= BASE_URL ?>/mi-cuenta/password">👤 <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></a>
-            <a href="<?= BASE_URL ?>/logout">Cerrar sesion</a>
+            <a href="<?= BASE_URL ?>/logout">Cerrar sesión</a>
         <?php endif; ?>
     </nav>
 </header>
 
-<main>
+<main class="main-content">
     <?= $content ?>
 </main>
 
-<footer class="site-footer">
-    Universidad Tecnologica de Panama &middot; Desarrollo de Software VII &middot; Sistema de Eventos Deportivos &copy; <?= date('Y') ?>
-</footer>
+<?php require ROOT_PATH . '/views/layout/footer.php'; ?>
 </body>
 </html>

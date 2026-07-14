@@ -47,8 +47,8 @@ final class Participante extends Model
 
     /**
      * Busca un participante por correo; si no existe, crea la cuenta de
-     * usuario (rol PARTICIPANTE, con contrasena generada aleatoriamente
-     * ya que no inicia sesion desde este panel) y su perfil de participante.
+     * usuario (rol PARTICIPANTE, con contraseña generada aleatoriamente
+     * ya que no inicia sesión desde este panel) y su perfil de participante.
      *
      * @return array{participante_id: int, usuario_id: int, creado: bool}
      */

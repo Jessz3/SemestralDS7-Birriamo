@@ -17,7 +17,7 @@
                     <input type="text" name="cedula">
                 </div>
                 <div class="field">
-                    <label>Anos de experiencia</label>
+                    <label>Años de experiencia</label>
                     <input type="number" name="anios_experiencia" min="0">
                 </div>
             </div>
