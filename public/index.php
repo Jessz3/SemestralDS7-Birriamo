@@ -11,6 +11,8 @@ ini_set('display_errors', '0'); // En produccion no se muestran errores crudos a
 
 session_start();
 
+date_default_timezone_set('America/Panama');
+
 define('BASE_URL', '');
 define('ROOT_PATH', dirname(__DIR__));
 
