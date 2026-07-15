@@ -46,6 +46,7 @@ final class ArbitroController extends Controller
         $this->render('arbitros/crear', [
             'deportes' => (new Deporte())->todos(true),
             'errores' => $this->getErrors(),
+            'datos' => $this->oldInput(),
             'csrf' => $_SESSION['csrf_token'],
         ]);
     }
@@ -82,7 +83,7 @@ final class ArbitroController extends Controller
         ]);
 
         if (!empty($errores)) {
-            $this->flashErrors($errores);
+            $this->flashErrors($errores, $datos);
             $this->redirect('/arbitros/crear');
         }
 

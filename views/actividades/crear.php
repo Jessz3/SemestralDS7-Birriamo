@@ -10,7 +10,7 @@
 
             <div class="field">
                 <label>Nombre de la actividad</label>
-                <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" required>
+                <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" minlength="3" maxlength="180" required>
             </div>
 
             <div class="grid-2">
@@ -90,22 +90,22 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Edad minima (opcional)</label>
-                    <input type="number" name="edad_minima" min="0">
+                    <input type="number" name="edad_minima" min="0" max="120" step="1">
                 </div>
                 <div class="field">
                     <label>Edad maxima (opcional)</label>
-                    <input type="number" name="edad_maxima" min="0">
+                    <input type="number" name="edad_maxima" min="0" max="120" step="1">
                 </div>
             </div>
 
             <div class="grid-2">
                 <div class="field">
                     <label>Cupos disponibles</label>
-                    <input type="number" name="cupos_disponibles" value="20" min="1" required>
+                    <input type="number" name="cupos_disponibles" value="20" min="1" max="65535" step="1" required>
                 </div>
                 <div class="field">
                     <label>Capacidad de invitados</label>
-                    <input type="number" name="capacidad_invitados" value="0" min="0">
+                    <input type="number" name="capacidad_invitados" value="0" min="0" max="65535" step="1">
                 </div>
             </div>
 
@@ -115,17 +115,17 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Costo de inscripcion ($)</label>
-                    <input type="number" step="0.01" name="costo_inscripcion" value="0" min="0" required>
+                    <input type="number" step="0.01" name="costo_inscripcion" value="0" min="0" max="99999999.99" required>
                 </div>
                 <div class="field">
                     <label>Costo de instalacion ($, uso interno)</label>
-                    <input type="number" step="0.01" name="costo_instalacion" value="0" min="0">
+                    <input type="number" step="0.01" name="costo_instalacion" value="0" min="0" max="99999999.99">
                 </div>
             </div>
 
             <div class="field">
                 <label>Descripcion</label>
-                <textarea name="descripcion" rows="3" required><?= htmlspecialchars($datos['descripcion'] ?? '') ?></textarea>
+                <textarea name="descripcion" rows="3" minlength="10" maxlength="5000" required><?= htmlspecialchars($datos['descripcion'] ?? '') ?></textarea>
             </div>
             <div class="field">
                 <label>Reglas (opcional)</label>

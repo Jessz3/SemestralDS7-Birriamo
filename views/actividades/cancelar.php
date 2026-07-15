@@ -12,7 +12,7 @@
 
             <div class="field">
                 <label>Motivo de la cancelacion</label>
-                <textarea name="motivo" rows="3" required></textarea>
+                <textarea name="motivo" rows="3" minlength="5" maxlength="1000" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-danger">Confirmar cancelacion</button>

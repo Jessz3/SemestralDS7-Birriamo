@@ -49,6 +49,7 @@ final class EntrenadorController extends Controller
             'organizadores' => (new Organizador())->todos(),
             'deportes' => (new Deporte())->todos(true),
             'errores' => $this->getErrors(),
+            'datos' => $this->oldInput(),
             'csrf' => $_SESSION['csrf_token'],
         ]);
     }
@@ -142,7 +143,7 @@ final class EntrenadorController extends Controller
         ]);
 
         if (!empty($errores)) {
-            $this->flashErrors($errores);
+            $this->flashErrors($errores, $datos);
             $this->redirect('/entrenadores/crear');
         }
 

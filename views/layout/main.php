@@ -53,5 +53,6 @@
 </main>
 
 <?php require ROOT_PATH . '/views/layout/footer.php'; ?>
+<script src="<?= BASE_URL ?>/assets/js/form-validations.js"></script>
 </body>
 </html>

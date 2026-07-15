@@ -30,7 +30,7 @@
             </div>
             <div class="field">
                 <label>Descripcion</label>
-                <textarea name="descripcion" rows="4" required></textarea>
+                <textarea name="descripcion" rows="4" minlength="10" maxlength="3000" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Registrar incidente</button>

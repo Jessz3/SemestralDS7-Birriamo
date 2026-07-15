@@ -17,18 +17,18 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" required>
+                    <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" minlength="2" maxlength="80" required>
                 </div>
                 <div class="field">
                     <label>Apellido</label>
-                    <input type="text" name="apellido" value="<?= htmlspecialchars($datos['apellido'] ?? '') ?>" required>
+                    <input type="text" name="apellido" value="<?= htmlspecialchars($datos['apellido'] ?? '') ?>" minlength="2" maxlength="80" required>
                 </div>
             </div>
 
             <div class="grid-2">
                 <div class="field">
                     <label>Nombre de usuario</label>
-                    <input type="text" name="usuario" value="<?= htmlspecialchars($datos['usuario'] ?? '') ?>" required>
+                    <input type="text" name="usuario" value="<?= htmlspecialchars($datos['usuario'] ?? '') ?>" pattern="[A-Za-z0-9]+" minlength="3" maxlength="60" title="Use solamente letras y numeros" required>
                 </div>
                 <div class="field">
                     <label>Rol</label>
@@ -48,7 +48,7 @@
 
             <div class="field">
                 <label>Correo electronico</label>
-                <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" required>
+                <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" maxlength="150" required>
             </div>
 
             <div class="grid-2">

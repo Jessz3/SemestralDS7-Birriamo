@@ -9,7 +9,7 @@
 
             <div class="field">
                 <label>Nombre del equipo</label>
-                <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" required>
+                <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" minlength="2" maxlength="120" required>
             </div>
 
             <div class="grid-2">
@@ -50,21 +50,21 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Nombre del representante</label>
-                    <input type="text" name="rep_nombre" value="<?= htmlspecialchars($datos['rep_nombre'] ?? '') ?>" required>
+                    <input type="text" name="rep_nombre" value="<?= htmlspecialchars($datos['rep_nombre'] ?? '') ?>" minlength="2" maxlength="80" required>
                 </div>
                 <div class="field">
                     <label>Apellido del representante</label>
-                    <input type="text" name="rep_apellido" value="<?= htmlspecialchars($datos['rep_apellido'] ?? '') ?>" required>
+                    <input type="text" name="rep_apellido" value="<?= htmlspecialchars($datos['rep_apellido'] ?? '') ?>" minlength="2" maxlength="80" required>
                 </div>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>Correo del representante</label>
-                    <input type="email" name="rep_correo" value="<?= htmlspecialchars($datos['rep_correo'] ?? '') ?>" required>
+                    <input type="email" name="rep_correo" value="<?= htmlspecialchars($datos['rep_correo'] ?? '') ?>" maxlength="150" required>
                 </div>
                 <div class="field">
                     <label>Telefono del representante</label>
-                    <input type="text" name="rep_telefono" value="<?= htmlspecialchars($datos['rep_telefono'] ?? '') ?>">
+                    <input type="tel" name="rep_telefono" value="<?= htmlspecialchars($datos['rep_telefono'] ?? '') ?>" pattern="6[0-9]{7}" minlength="8" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese un celular panameno de 8 digitos que comience con 6">
                 </div>
             </div>
             <?php else: ?>

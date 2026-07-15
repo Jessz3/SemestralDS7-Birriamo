@@ -22,11 +22,11 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Minimo de jugadores</label>
-                    <input type="number" name="minimo_jugadores" min="1" value="<?= htmlspecialchars($deporte['minimo_jugadores'] ?? '') ?>">
+                    <input type="number" name="minimo_jugadores" min="1" max="1000" step="1" value="<?= htmlspecialchars($deporte['minimo_jugadores'] ?? '') ?>">
                 </div>
                 <div class="field">
                     <label>Maximo de jugadores</label>
-                    <input type="number" name="maximo_jugadores" min="1" value="<?= htmlspecialchars($deporte['maximo_jugadores'] ?? '') ?>">
+                    <input type="number" name="maximo_jugadores" min="1" max="1000" step="1" value="<?= htmlspecialchars($deporte['maximo_jugadores'] ?? '') ?>">
                 </div>
             </div>
 

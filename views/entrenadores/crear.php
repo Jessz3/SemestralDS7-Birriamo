@@ -9,26 +9,26 @@
 
             <div class="field">
                 <label>Nombre completo</label>
-                <input type="text" name="nombre_completo" required>
+                <input type="text" name="nombre_completo" value="<?= htmlspecialchars($datos['nombre_completo'] ?? '') ?>" minlength="3" maxlength="160" required>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>Cedula (opcional)</label>
-                    <input type="text" name="cedula">
+                    <input type="text" name="cedula" value="<?= htmlspecialchars($datos['cedula'] ?? '') ?>" maxlength="30">
                 </div>
                 <div class="field">
                     <label>Años de experiencia</label>
-                    <input type="number" name="anios_experiencia" min="0">
+                    <input type="number" name="anios_experiencia" value="<?= htmlspecialchars((string) ($datos['anios_experiencia'] ?? '')) ?>" min="0" max="65535" step="1">
                 </div>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>Correo</label>
-                    <input type="email" name="correo" required>
+                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" maxlength="150" required>
                 </div>
                 <div class="field">
                     <label>Telefono celular</label>
-                    <input type="tel" name="telefono" pattern="6[0-9]{7}" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese 8 digitos, comenzando con 6" required>
+                    <input type="tel" name="telefono" value="<?= htmlspecialchars($datos['telefono'] ?? '') ?>" pattern="6[0-9]{7}" minlength="8" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese 8 digitos, comenzando con 6" required>
                 </div>
             </div>
             <div class="grid-2">
@@ -37,7 +37,7 @@
                     <select name="academia_id">
                         <option value="">Ninguna</option>
                         <?php foreach ($academias as $a): ?>
-                            <option value="<?= (int) $a['id'] ?>"><?= htmlspecialchars($a['nombre']) ?></option>
+                            <option value="<?= (int) $a['id'] ?>" <?= (int) ($datos['academia_id'] ?? 0) === (int) $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nombre']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -46,21 +46,21 @@
                     <select name="organizador_id">
                         <option value="">Ninguno</option>
                         <?php foreach ($organizadores as $o): ?>
-                            <option value="<?= (int) $o['id'] ?>"><?= htmlspecialchars($o['nombre_completo']) ?></option>
+                            <option value="<?= (int) $o['id'] ?>" <?= (int) ($datos['organizador_id'] ?? 0) === (int) $o['id'] ? 'selected' : '' ?>><?= htmlspecialchars($o['nombre_completo']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
             </div>
             <div class="field">
                 <label>Certificaciones</label>
-                <textarea name="certificaciones" rows="2"></textarea>
+                <textarea name="certificaciones" rows="2"><?= htmlspecialchars($datos['certificaciones'] ?? '') ?></textarea>
             </div>
 
             <div class="field">
                 <label>Deportes que entrena</label>
                 <div class="grid-3">
                     <?php foreach ($deportes as $d): ?>
-                        <label style="font-weight:400;"><input type="checkbox" name="deportes[]" value="<?= (int) $d['id'] ?>" style="width:auto;display:inline-block;"> <?= htmlspecialchars($d['nombre']) ?></label>
+                        <label style="font-weight:400;"><input type="checkbox" name="deportes[]" value="<?= (int) $d['id'] ?>" <?= in_array((int) $d['id'], $datos['deportes'] ?? [], true) ? 'checked' : '' ?> style="width:auto;display:inline-block;"> <?= htmlspecialchars($d['nombre']) ?></label>
                     <?php endforeach; ?>
                 </div>
             </div>
