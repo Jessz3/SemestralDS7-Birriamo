@@ -88,9 +88,9 @@ $router->get('/organizadores/crear', 'OrganizadorController', 'crearForm');
 $router->post('/organizadores/crear', 'OrganizadorController', 'crear');
 $router->get('/organizadores/editar', 'OrganizadorController', 'editarForm');
 $router->post('/organizadores/editar', 'OrganizadorController', 'actualizar');
-$router->get('/organizadores/verificar', 'OrganizadorController', 'verificar');
-$router->get('/organizadores/deshabilitar', 'OrganizadorController', 'deshabilitar');
-$router->get('/organizadores/habilitar', 'OrganizadorController', 'habilitar');
+$router->post('/organizadores/verificar', 'OrganizadorController', 'verificar');
+$router->post('/organizadores/deshabilitar', 'OrganizadorController', 'deshabilitar');
+$router->post('/organizadores/habilitar', 'OrganizadorController', 'habilitar');
 
 // ---------- Entrenadores ----------
 $router->get('/entrenadores', 'EntrenadorController', 'index');
