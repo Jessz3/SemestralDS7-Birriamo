@@ -34,7 +34,14 @@ final class Organizador extends Model
 
     public function buscarPorUsuarioId(int $usuarioId): ?array
     {
-        $stmt = $this->db->prepare('SELECT * FROM organizadores WHERE usuario_id = :usuario_id LIMIT 1');
+        $stmt = $this->db->prepare(
+            "SELECT o.*, CONCAT(u.nombre, ' ', u.apellido) AS nombre_completo,
+                    u.correo, u.telefono
+             FROM organizadores o
+             JOIN usuarios u ON u.id = o.usuario_id
+             WHERE o.usuario_id = :usuario_id
+             LIMIT 1"
+        );
         $stmt->execute(['usuario_id' => $usuarioId]);
         return $stmt->fetch() ?: null;
     }

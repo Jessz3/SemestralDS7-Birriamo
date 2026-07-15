@@ -7,18 +7,15 @@
         <p><strong>Actividad:</strong> <?= htmlspecialchars($actividad['nombre']) ?></p>
         <p><strong>Arbitro:</strong> <?= htmlspecialchars($arbitro['nombre_completo']) ?></p>
 
-        <form method="POST" action="/arbitros/evaluar">
+        <form method="POST" action="<?= BASE_URL ?>/arbitros/evaluar">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
             <input type="hidden" name="actividad_id" value="<?= (int) $actividad['id'] ?>">
             <input type="hidden" name="arbitro_id" value="<?= (int) $arbitro['id'] ?>">
 
             <div class="field">
                 <label>Organizador que evalua</label>
-                <select name="organizador_id" required>
-                    <?php foreach ($organizadores as $o): ?>
-                        <option value="<?= (int) $o['id'] ?>"><?= htmlspecialchars($o['nombre_completo']) ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <input type="text" value="<?= htmlspecialchars($organizador['nombre_completo']) ?>" readonly aria-readonly="true">
+                <p class="field-hint">La evaluación quedará registrada a nombre del organizador que inició sesión.</p>
             </div>
 
             <?php
@@ -51,7 +48,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Registrar evaluacion</button>
-            <a class="btn btn-outline" href="/actividades/ver?id=<?= (int) $actividad['id'] ?>">Cancelar</a>
+            <a class="btn btn-outline" href="<?= BASE_URL ?>/actividades/ver?id=<?= (int) $actividad['id'] ?>">Cancelar</a>
         </form>
     </div>
 </div>

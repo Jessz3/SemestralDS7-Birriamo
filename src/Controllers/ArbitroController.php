@@ -8,6 +8,7 @@ use App\Core\Controller;
 use App\Models\Actividad;
 use App\Models\Arbitro;
 use App\Models\Deporte;
+use App\Models\Organizador;
 use App\Utils\Sanitizacion;
 use App\Utils\Validaciones;
 
@@ -105,14 +106,22 @@ final class ArbitroController extends Controller
 
         $actividad = (new Actividad())->buscarPorId($actividadId);
         $arbitro = (new Arbitro())->buscarPorId($arbitroId);
+        $organizador = $this->organizadorActual();
 
         if (!$actividad || !$arbitro) {
             $this->redirect('/actividades');
         }
 
+        if ((int) $actividad['organizador_id'] !== (int) $organizador['id']) {
+            http_response_code(403);
+            $this->render('errors/403');
+            exit;
+        }
+
         $this->render('arbitros/evaluar', [
             'actividad' => $actividad,
             'arbitro' => $arbitro,
+            'organizador' => $organizador,
             'errores' => $this->getErrors(),
             'csrf' => $_SESSION['csrf_token'],
         ]);
@@ -127,7 +136,20 @@ final class ArbitroController extends Controller
         $actividadId = (int) ($_POST['actividad_id'] ?? 0);
         $arbitroId = (int) ($_POST['arbitro_id'] ?? 0);
 
-        $organizadorId = (int) ($_SESSION['usuario_id'] ?? 0);
+        $organizador = $this->organizadorActual();
+        $organizadorId = (int) $organizador['id'];
+        $actividad = (new Actividad())->buscarPorId($actividadId);
+        $arbitro = (new Arbitro())->buscarPorId($arbitroId);
+
+        if (!$actividad || !$arbitro) {
+            $this->redirect('/actividades');
+        }
+
+        if ((int) $actividad['organizador_id'] !== $organizadorId) {
+            http_response_code(403);
+            $this->render('errors/403');
+            exit;
+        }
 
         $puntuacion = Sanitizacion::entero(
             $_POST['puntuacion'] ?? 0
@@ -192,5 +214,20 @@ final class ArbitroController extends Controller
         $this->redirect(
             '/actividades/ver?id=' . $actividadId
         );
+    }
+
+    private function organizadorActual(): array
+    {
+        $organizador = (new Organizador())->buscarPorUsuarioId(
+            (int) ($_SESSION['usuario_id'] ?? 0)
+        );
+
+        if (!$organizador) {
+            throw new \RuntimeException(
+                'La cuenta no tiene un perfil de organizador asociado.'
+            );
+        }
+
+        return $organizador;
     }
 }
