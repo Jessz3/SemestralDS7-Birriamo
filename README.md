@@ -317,54 +317,54 @@ La separación entre modelos, controladores, vistas, validadores y servicios cri
 
 El visitante abre la dirección principal del sistema. Desde esta pantalla puede conocer la importancia de la plataforma, consultar las tecnologías utilizadas, revisar actividades públicas y utilizar el formulario de contacto.
 
-![Página pública](image.png)
+![Página pública](manual/image.png)
 
 ## 5.2. Inicio de sesión
 
 El usuario selecciona la opción de inicio de sesión, introduce su nombre de usuario y contraseña y envía el formulario. El sistema valida las credenciales, el estado de la cuenta y los intentos fallidos antes de mostrar el panel correspondiente al rol.
 
-![inicio de sesión](image-1.png)
+![inicio de sesión](manual/image-1.png)
 
 ## 5.3. Menú principal por rol
 
 Después de autenticarse, el sistema muestra las opciones autorizadas.
 
-![adminpantalla](image-2.png)
-![opepantalla](image-5.png)
-![orgpantalla](image-3.png)
-![partpantalla](image-4.png)
+![adminpantalla](manual/image-2.png)
+![opepantalla](manual/image-5.png)
+![orgpantalla](manual/image-3.png)
+![partpantalla](manual/image-4.png)
 
 ## 5.4. Gestión de usuarios
 
 El administrador accede al módulo de usuarios para agregar, buscar, modificar, habilitar o deshabilitar cuentas. Al registrar un usuario se selecciona su rol y se generan los elementos de seguridad correspondientes.
 
-![gestusuarios](image-6.png)
+![gestusuarios](manual/image-6.png)
 
-![agregarusu](image-7.png)
+![agregarusu](manual/image-7.png)
 
-![editusu](image-8.png)
+![editusu](manual/image-8.png)
 
 ## 5.5. Creación y publicación de actividades
 
 El usuario autorizado abre el formulario de actividades, registra el deporte, la instalación, el organizador, las fechas, modalidad, cupos, costos y reglas. La actividad se crea como borrador y posteriormente puede publicarse. La publicación genera el token público y el código QR.
 
-![crearactividad](image-9.png)
+![crearactividad](manual/image-9.png)
 
-![listaactividad](image-10.png)
+![listaactividad](manual/image-10.png)
 
-![actividadqr](image-11.png)
+![actividadqr](manual/image-11.png)
 
 ## 5.6. Registro de equipos e inscripciones
 
 El participante o representante registra un equipo y sus jugadores. Posteriormente selecciona una actividad disponible y envía la inscripción individual o por equipo. Las inscripciones por equipo deben ser revisadas por el organizador.
 
-![listaequipo](image-12.png)
+![listaequipo](manual/image-12.png)
 
 ## 5.7. Pago y facturación
 
 Al aprobar una inscripción que requiere pago, el sistema registra la transacción, calcula el ITBMS y genera una factura en PDF. La factura queda asociada al pago y contiene firmas o hashes para verificar su integridad.
 
-![facturapdf](image-13.png)
+![facturapdf](manual/image-13.png)
 
 ## 5.8. Incidentes, árbitros y estadísticas
 
