@@ -179,9 +179,9 @@ La siguiente matriz permite al evaluador ingresar rápidamente a los escenarios 
 | Rol de usuario | Usuario de acceso | Contraseña de prueba | Permisos / Qué puede hacer |
 |---|---|---|---|
 | Administrador | `admin` | `Admin123` | Control total, gestión de usuarios, catálogos, actividades, configuración, estadísticas, bitácora y verificación de integridad. |
-| Operador | `[CREAR USUARIO OPERADOR]` | `[COMPLETAR]` | Gestiona deportes, instalaciones, academias, organizadores, entrenadores, árbitros y actividades. No tiene acceso al módulo de usuarios. |
-| Organizador | `[COMPLETAR USUARIO DE PRUEBA]` | `[COMPLETAR]` | Crea y administra actividades, revisa inscripciones, registra incidentes y evalúa árbitros. |
-| Participante | `[COMPLETAR USUARIO DE PRUEBA]` | `[COMPLETAR]` | Consulta actividades, registra equipos, realiza inscripciones y consulta facturas. |
+| Operador | `operador2` | `password` | Gestiona deportes, instalaciones, academias, organizadores, entrenadores, árbitros y actividades. No tiene acceso al módulo de usuarios. |
+| Organizador | `organizador2` | `password` | Crea y administra actividades, revisa inscripciones, registra incidentes y evalúa árbitros. |
+| Participante | `participante2` | `password` | Consulta actividades, registra equipos, realiza inscripciones y consulta facturas. |
 
 > El usuario administrador está incluido en `database/schema.sql`. Antes de la evaluación, el equipo debe crear o confirmar las credenciales funcionales de Operador, Organizador y Participante y sustituir los marcadores de esta tabla.
 
@@ -313,216 +313,70 @@ La separación entre modelos, controladores, vistas, validadores y servicios cri
 
 # 5. Manual de Usuario Operativo — Flujo de Pantallas
 
-Esta sección debe completarse con capturas reales del sistema. Cada espacio indica la imagen que debe insertarse y una explicación sugerida.
-
 ## 5.1. Acceso a la página pública
 
 El visitante abre la dirección principal del sistema. Desde esta pantalla puede conocer la importancia de la plataforma, consultar las tecnologías utilizadas, revisar actividades públicas y utilizar el formulario de contacto.
 
-> **ESPACIO PARA CAPTURA 1 — Página pública / Inicio**  
-> Insertar aquí una imagen completa de la página pública.
-
-```text
-[ CAPTURA DE PANTALLA: PÁGINA PÚBLICA ]
-```
+![Página pública](image.png)
 
 ## 5.2. Inicio de sesión
 
 El usuario selecciona la opción de inicio de sesión, introduce su nombre de usuario y contraseña y envía el formulario. El sistema valida las credenciales, el estado de la cuenta y los intentos fallidos antes de mostrar el panel correspondiente al rol.
 
-> **ESPACIO PARA CAPTURA 2 — Formulario de inicio de sesión**
-
-```text
-[ CAPTURA DE PANTALLA: LOGIN ]
-```
-
-> **ESPACIO PARA CAPTURA 3 — Mensaje de credenciales inválidas o bloqueo**
-
-```text
-[ CAPTURA DE PANTALLA: VALIDACIÓN DEL LOGIN ]
-```
+![inicio de sesión](image-1.png)
 
 ## 5.3. Menú principal por rol
 
-Después de autenticarse, el sistema muestra las opciones autorizadas. El administrador visualiza todos los módulos; el operador no debe visualizar el módulo de usuarios.
+Después de autenticarse, el sistema muestra las opciones autorizadas.
 
-> **ESPACIO PARA CAPTURA 4 — Menú del Administrador**
-
-```text
-[ CAPTURA DE PANTALLA: MENÚ ADMINISTRADOR ]
-```
-
-> **ESPACIO PARA CAPTURA 5 — Menú del Operador sin módulo de usuarios**
-
-```text
-[ CAPTURA DE PANTALLA: MENÚ OPERADOR ]
-```
+![adminpantalla](image-2.png)
+![opepantalla](image-5.png)
+![orgpantalla](image-3.png)
+![partpantalla](image-4.png)
 
 ## 5.4. Gestión de usuarios
 
 El administrador accede al módulo de usuarios para agregar, buscar, modificar, habilitar o deshabilitar cuentas. Al registrar un usuario se selecciona su rol y se generan los elementos de seguridad correspondientes.
 
-> **ESPACIO PARA CAPTURA 6 — Listado y búsqueda de usuarios**
+![gestusuarios](image-6.png)
 
-```text
-[ CAPTURA DE PANTALLA: LISTADO DE USUARIOS ]
-```
+![agregarusu](image-7.png)
 
-> **ESPACIO PARA CAPTURA 7 — Formulario para agregar usuario**
+![editusu](image-8.png)
 
-```text
-[ CAPTURA DE PANTALLA: CREAR USUARIO ]
-```
-
-> **ESPACIO PARA CAPTURA 8 — Formulario para modificar o deshabilitar usuario**
-
-```text
-[ CAPTURA DE PANTALLA: MODIFICAR USUARIO ]
-```
-
-## 5.5. Gestión de catálogos
-
-El administrador u operador puede gestionar deportes, instalaciones, academias, entrenadores, árbitros y organizadores. Cada módulo permite consultar, agregar, modificar y cambiar el estado de los registros según los permisos asignados.
-
-> **ESPACIO PARA CAPTURA 9 — Catálogo de deportes**
-
-```text
-[ CAPTURA DE PANTALLA: DEPORTES ]
-```
-
-> **ESPACIO PARA CAPTURA 10 — Instalaciones deportivas**
-
-```text
-[ CAPTURA DE PANTALLA: INSTALACIONES ]
-```
-
-> **ESPACIO PARA CAPTURA 11 — Academias, entrenadores u organizadores**
-
-```text
-[ CAPTURA DE PANTALLA: CATÁLOGOS COMPLEMENTARIOS ]
-```
-
-## 5.6. Creación y publicación de actividades
+## 5.5. Creación y publicación de actividades
 
 El usuario autorizado abre el formulario de actividades, registra el deporte, la instalación, el organizador, las fechas, modalidad, cupos, costos y reglas. La actividad se crea como borrador y posteriormente puede publicarse. La publicación genera el token público y el código QR.
 
-> **ESPACIO PARA CAPTURA 12 — Formulario de creación de actividad**
+![crearactividad](image-9.png)
 
-```text
-[ CAPTURA DE PANTALLA: CREAR ACTIVIDAD ]
-```
+![listaactividad](image-10.png)
 
-> **ESPACIO PARA CAPTURA 13 — Listado y estados de actividades**
+![actividadqr](image-11.png)
 
-```text
-[ CAPTURA DE PANTALLA: LISTADO DE ACTIVIDADES ]
-```
-
-> **ESPACIO PARA CAPTURA 14 — Detalle público y código QR**
-
-```text
-[ CAPTURA DE PANTALLA: ACTIVIDAD PUBLICADA Y QR ]
-```
-
-## 5.7. Registro de equipos e inscripciones
+## 5.6. Registro de equipos e inscripciones
 
 El participante o representante registra un equipo y sus jugadores. Posteriormente selecciona una actividad disponible y envía la inscripción individual o por equipo. Las inscripciones por equipo deben ser revisadas por el organizador.
 
-> **ESPACIO PARA CAPTURA 15 — Registro de equipo y jugadores**
+![listaequipo](image-12.png)
 
-```text
-[ CAPTURA DE PANTALLA: EQUIPO Y JUGADORES ]
-```
-
-> **ESPACIO PARA CAPTURA 16 — Inscripción individual o por equipo**
-
-```text
-[ CAPTURA DE PANTALLA: FORMULARIO DE INSCRIPCIÓN ]
-```
-
-> **ESPACIO PARA CAPTURA 17 — Aprobación o rechazo de inscripción**
-
-```text
-[ CAPTURA DE PANTALLA: GESTIÓN DE INSCRIPCIONES ]
-```
-
-## 5.8. Pago y facturación
+## 5.7. Pago y facturación
 
 Al aprobar una inscripción que requiere pago, el sistema registra la transacción, calcula el ITBMS y genera una factura en PDF. La factura queda asociada al pago y contiene firmas o hashes para verificar su integridad.
 
-> **ESPACIO PARA CAPTURA 18 — Registro o estado del pago**
+![facturapdf](image-13.png)
 
-```text
-[ CAPTURA DE PANTALLA: PAGO ]
-```
-
-> **ESPACIO PARA CAPTURA 19 — Vista de la factura**
-
-```text
-[ CAPTURA DE PANTALLA: FACTURA ]
-```
-
-> **ESPACIO PARA CAPTURA 20 — PDF generado con TCPDF**
-
-```text
-[ CAPTURA DE PANTALLA: FACTURA PDF ]
-```
-
-## 5.9. Incidentes, árbitros y estadísticas
+## 5.8. Incidentes, árbitros y estadísticas
 
 El organizador puede registrar incidentes ocurridos durante las actividades y evaluar el desempeño de los árbitros. El sistema presenta estadísticas relacionadas con actividades, inscripciones, ingresos, incidentes y evaluaciones.
 
-> **ESPACIO PARA CAPTURA 21 — Registro de incidente**
-
-```text
-[ CAPTURA DE PANTALLA: INCIDENTES ]
-```
-
-> **ESPACIO PARA CAPTURA 22 — Evaluación de árbitro**
-
-```text
-[ CAPTURA DE PANTALLA: EVALUACIÓN DE ÁRBITRO ]
-```
-
-> **ESPACIO PARA CAPTURA 23 — Panel de estadísticas**
-
-```text
-[ CAPTURA DE PANTALLA: ESTADÍSTICAS ]
-```
-
-## 5.10. Bitácora e integridad
+## 5.9. Bitácora e integridad
 
 El administrador consulta la bitácora para revisar el usuario responsable, módulo, acción, dirección IP, fecha y firma HMAC. Esta sección permite demostrar que las acciones críticas dejan evidencia verificable.
 
-> **ESPACIO PARA CAPTURA 24 — Bitácora de auditoría**
-
-```text
-[ CAPTURA DE PANTALLA: BITÁCORA ]
-```
-
-> **ESPACIO PARA CAPTURA 25 — Verificación de firma o integridad**
-
-```text
-[ CAPTURA DE PANTALLA: VERIFICACIÓN DE INTEGRIDAD ]
-```
-
-## 5.11. Cambio de contraseña y cierre de sesión
+## 5.10. Cambio de contraseña y cierre de sesión
 
 Todos los usuarios autenticados pueden cambiar su contraseña desde el módulo correspondiente. Al finalizar sus operaciones deben cerrar la sesión para invalidar el acceso actual.
-
-> **ESPACIO PARA CAPTURA 26 — Cambio de contraseña**
-
-```text
-[ CAPTURA DE PANTALLA: CAMBIAR CONTRASEÑA ]
-```
-
-> **ESPACIO PARA CAPTURA 27 — Cierre de sesión o regreso al login**
-
-```text
-[ CAPTURA DE PANTALLA: CIERRE DE SESIÓN ]
-```
-
----
 
 # 6. Pruebas rápidas y evidencia de seguridad
 
