@@ -41,8 +41,14 @@ final class ActividadController extends Controller
             return;
         }
 
+        $busqueda = Sanitizacion::texto($_GET['q'] ?? '');
+        $actividades = !empty($busqueda)
+            ? (new Actividad())->buscar($busqueda)
+            : (new Actividad())->todos();
+
         $this->render('actividades/index', [
-            'actividades' => (new Actividad())->todos(),
+            'actividades' => $actividades,
+            'busqueda' => $busqueda,
             'exito' => $this->getSuccess(),
         ]);
     }

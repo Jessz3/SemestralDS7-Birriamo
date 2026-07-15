@@ -39,6 +39,20 @@ final class Actividad extends Model
         return $this->db->query($sql)->fetchAll();
     }
 
+    /** Busca actividades por nombre, deporte u organizador. */
+    public function buscar(string $termino): array
+    {
+        $termino = '%' . $termino . '%';
+        $sql = self::SELECT_BASE . "
+            WHERE act.nombre LIKE ?
+               OR d.nombre LIKE ?
+               OR CONCAT(u.nombre, ' ', u.apellido) LIKE ?
+            ORDER BY act.fecha_inicio DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$termino, $termino, $termino]);
+        return $stmt->fetchAll();
+    }
+
     public function admiteInscripcion(array $actividad): bool
     {
         if (($actividad['estado'] ?? '') !== 'PUBLICADA') {

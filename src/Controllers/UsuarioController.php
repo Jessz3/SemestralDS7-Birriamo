@@ -29,10 +29,18 @@ final class UsuarioController extends Controller
     {
         $this->requireRole('ADMINISTRADOR');
         $modelo = new Usuario();
+        
+        $busqueda = Sanitizacion::texto($_GET['q'] ?? '');
+        $usuarios = !empty($busqueda)
+            ? $modelo->buscar($busqueda)
+            : $modelo->todos();
+
         $this->render('usuarios/index', [
-            'usuarios' => $modelo->todos(),
+            'usuarios' => $usuarios,
+            'busqueda' => $busqueda,
             'errores' => $this->getErrors(),
             'exito' => $this->getSuccess(),
+            'csrf' => $_SESSION['csrf_token'] ?? '',
         ]);
     }
 

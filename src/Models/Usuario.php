@@ -24,6 +24,21 @@ final class Usuario extends Model
         return $stmt->fetchAll();
     }
 
+    /** Busca usuarios por nombre, usuario, correo o rol. */
+    public function buscar(string $termino): array
+    {
+        $termino = '%' . $termino . '%';
+        $sql = 'SELECT * FROM usuarios 
+            WHERE CONCAT(nombre, \' \', apellido) LIKE ?
+               OR usuario LIKE ?
+               OR correo LIKE ?
+               OR rol LIKE ?
+            ORDER BY id DESC';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$termino, $termino, $termino, $termino]);
+        return $stmt->fetchAll();
+    }
+
     public function buscarPorId(int $id): ?array
     {
         $stmt = $this->db->prepare('SELECT * FROM usuarios WHERE id = :id LIMIT 1');

@@ -6,6 +6,19 @@
 
     <?php require __DIR__ . '/../layout/_alerts.php'; ?>
 
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <form method="GET" action="/actividades" style="display: flex; gap: 0.5rem; align-items: flex-end;">
+            <div class="field" style="flex: 1;">
+                <label for="search">Buscar actividad</label>
+                <input type="text" id="search" name="q" placeholder="Nombre, deporte u organizador..." value="<?= htmlspecialchars($busqueda ?? '') ?>">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+            <?php if (!empty($busqueda)): ?>
+                <a href="/actividades" class="btn btn-outline btn-sm">Limpiar</a>
+            <?php endif; ?>
+        </form>
+    </div>
+
     <div class="card">
         <table class="data-table">
             <thead><tr><th>Nombre</th><th>Deporte</th><th>Fecha inicio</th><th>Instalacion</th><th>Estado</th><th>Acciones</th></tr></thead>
