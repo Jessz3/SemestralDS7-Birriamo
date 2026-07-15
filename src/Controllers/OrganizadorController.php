@@ -65,7 +65,10 @@ final class OrganizadorController extends Controller
 
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($datos['nombre'], 'nombre'),
+            fn() => Validaciones::nombrePersona($datos['nombre'], 'nombre'),
+
             fn() => Validaciones::requerido($datos['apellido'], 'apellido'),
+            fn() => Validaciones::nombrePersona($datos['apellido'], 'apellido'),
             fn() => Validaciones::requerido($datos['correo'], 'correo'),
             fn() => Validaciones::email($datos['correo']),
             fn() => Validaciones::enLista($datos['tipo_organizador'], Organizador::TIPOS, 'tipo de organizador'),

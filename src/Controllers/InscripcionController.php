@@ -221,7 +221,10 @@ final class InscripcionController extends Controller
             fn() => !$actividad ? 'Actividad no encontrada.' : null,
             fn() => $actividad && !$actividadModelo->admiteInscripcion($actividad) ? 'Esta actividad no admite inscripciones en su estado actual.' : null,
             fn() => Validaciones::requerido($datos['nombre'], 'nombre'),
+            fn() => Validaciones::nombrePersona($datos['nombre'], 'nombre'),
+
             fn() => Validaciones::requerido($datos['apellido'], 'apellido'),
+            fn() => Validaciones::nombrePersona($datos['apellido'], 'apellido'),
             fn() => Validaciones::email($datos['correo']),
             fn() => Validaciones::rangoNumerico((float) $datos['edad'], 5, 100, 'edad'),
             fn() => $actividad && !empty($actividad['edad_minima']) && $datos['edad'] < $actividad['edad_minima']

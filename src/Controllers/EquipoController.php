@@ -102,7 +102,10 @@ final class EquipoController extends Controller
             fn() => Validaciones::requerido($datos['nombre'], 'nombre del equipo'),
             fn() => Validaciones::requerido((string) $datos['deporte_id'], 'deporte'),
             fn() => Validaciones::requerido($datos['rep_nombre'], 'nombre del representante'),
+            fn() => Validaciones::nombrePersona($datos['rep_nombre'], 'nombre del representante'),
+
             fn() => Validaciones::requerido($datos['rep_apellido'], 'apellido del representante'),
+            fn() => Validaciones::nombrePersona($datos['rep_apellido'], 'apellido del representante'),
             fn() => Validaciones::email($datos['rep_correo']),
         ]);
 
