@@ -33,7 +33,7 @@ Birria-MO es una aplicación web desarrollada para administrar actividades depor
 
 Enlace directo al video donde el equipo explica la arquitectura, ejecuta los módulos principales y demuestra las validaciones de seguridad:
 
-**Video:** `[INSERTAR ENLACE DE YOUTUBE O GOOGLE DRIVE]`
+**Video:** `https://youtu.be/aJCvTU2BQ2o?si=EiqvEB7QS9b87las`
 
 ## 1.5. Repositorio y respaldo de la base de datos
 
