@@ -4,7 +4,7 @@
     <?php require __DIR__ . '/../layout/_alerts.php'; ?>
 
     <div class="card">
-        <form method="POST" action="/arbitros/crear">
+        <form method="POST" action="<?= BASE_URL ?>/arbitros/crear">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
 
             <div class="field">
@@ -27,8 +27,8 @@
                     <input type="email" name="correo">
                 </div>
                 <div class="field">
-                    <label>Telefono</label>
-                    <input type="text" name="telefono">
+                    <label>Telefono celular</label>
+                    <input type="tel" name="telefono" pattern="6[0-9]{7}" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese 8 digitos, comenzando con 6" required>
                 </div>
             </div>
             <div class="field">
@@ -46,7 +46,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a class="btn btn-outline" href="/arbitros">Cancelar</a>
+            <a class="btn btn-outline" href="<?= BASE_URL ?>/arbitros">Cancelar</a>
         </form>
     </div>
 </div>

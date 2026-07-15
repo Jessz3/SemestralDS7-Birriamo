@@ -55,6 +55,24 @@ final class Validaciones
         return null;
     }
 
+    public static function enteroPositivo(mixed $valor, string $campo): ?string
+    {
+        if (filter_var($valor, FILTER_VALIDATE_INT) === false || (int) $valor < 0) {
+            return "El campo {$campo} debe ser un numero entero igual o mayor que cero.";
+        }
+
+        return null;
+    }
+
+    public static function celularPanama(string $valor): ?string
+    {
+        if (!preg_match('/^6\d{7}$/', $valor)) {
+            return 'El telefono debe ser un celular panameno de 8 digitos y comenzar con 6.';
+        }
+
+        return null;
+    }
+
     public static function rangoNumerico(float $valor, float $min, float $max, string $campo): ?string
     {
         if ($valor < $min || $valor > $max) {

@@ -226,7 +226,7 @@ a:hover { text-decoration: underline; }
 label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: .3rem; color: var(--color-navy-900); }
 
 input[type=text], input[type=email], input[type=password], input[type=number],
-input[type=date], input[type=time], input[type=file], select, textarea {
+input[type=tel], input[type=date], input[type=time], input[type=file], select, textarea {
     width: 100%;
     padding: .6rem .7rem;
     border: 1px solid var(--color-border);

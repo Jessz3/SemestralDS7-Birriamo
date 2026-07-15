@@ -117,10 +117,7 @@ final class EntrenadorController extends Controller
                 'telefono'
             ),
 
-            fn() => Validaciones::entero(
-                $datos['telefono'],
-                'telefono'
-            ),
+            fn() => Validaciones::celularPanama($datos['telefono']),
 
             fn() => $rawAnios !== ''
                 ? Validaciones::enteroPositivo(

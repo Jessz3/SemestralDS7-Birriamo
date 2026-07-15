@@ -1,7 +1,9 @@
 <div class="container">
     <div class="page-head">
         <div><div class="eyebrow">Catalogo</div><h1>Entrenadores</h1></div>
-        <a class="btn btn-primary" href="/entrenadores/crear">+ Nuevo entrenador</a>
+        <?php if (in_array($_SESSION['usuario_rol'] ?? '', ['ADMINISTRADOR', 'OPERADOR'], true)): ?>
+            <a class="btn btn-primary" href="<?= BASE_URL ?>/entrenadores/crear">+ Nuevo entrenador</a>
+        <?php endif; ?>
     </div>
 
     <?php require __DIR__ . '/../layout/_alerts.php'; ?>

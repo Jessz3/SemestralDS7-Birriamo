@@ -74,6 +74,11 @@ final class ArbitroController extends Controller
                 $datos['nombre_completo'],
                 'nombre completo'
             ),
+            fn() => Validaciones::requerido(
+                $datos['telefono'],
+                'telefono'
+            ),
+            fn() => Validaciones::celularPanama($datos['telefono']),
         ]);
 
         if (!empty($errores)) {
