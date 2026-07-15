@@ -15,6 +15,6 @@
         </table>
 
         <a class="btn btn-primary" style="margin-top:1rem;" href="<?= BASE_URL ?>/facturas/descargar?id=<?= (int) $factura['id'] ?>">Descargar factura en PDF</a>
-        <a class="btn btn-outline" style="margin-top:1rem;" href="<?= BASE_URL ?>/">Volver al inicio</a>
+        <a class="btn btn-outline" style="margin-top:1rem;" href="<?= BASE_URL ?>/dashboard">Volver al inicio</a>
     </div>
 </div>
