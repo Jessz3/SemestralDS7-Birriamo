@@ -62,8 +62,10 @@ final class InscripcionController extends Controller
         $this->requireAuth();
         $this->verifyCsrf();
 
-        $actividadId = (int) ($_POST['actividad_id'] ?? 0);
-        $equipoId = (int) ($_POST['equipo_id'] ?? 0);
+        $rawActividad = $_POST['actividad_id'] ?? '';
+        $rawEquipo = $_POST['equipo_id'] ?? '';
+        $actividadId = (int) $rawActividad;
+        $equipoId = (int) $rawEquipo;
 
         $actividadModelo = new Actividad();
         $inscripcionModelo = new InscripcionEquipo();
@@ -71,6 +73,8 @@ final class InscripcionController extends Controller
         $equipo = (new Equipo())->buscarPorId($equipoId);
 
         $errores = Validaciones::validar([
+            fn() => Validaciones::entero($rawActividad, 'actividad'),
+            fn() => Validaciones::entero($rawEquipo, 'equipo'),
             fn() => !$actividad ? 'Actividad no encontrada.' : null,
             fn() => $actividad && !$actividadModelo->admiteInscripcion($actividad) ? 'Esta actividad no admite inscripciones en su estado actual.' : null,
             fn() => !$equipo ? 'Equipo no encontrado.' : null,
@@ -190,8 +194,8 @@ final class InscripcionController extends Controller
     public function inscribirIndividual(): void
     {
         $this->verifyCsrf();
-
-        $actividadId = (int) ($_POST['actividad_id'] ?? 0);
+        $rawActividad = $_POST['actividad_id'] ?? '';
+        $actividadId = (int) $rawActividad;
         $actividadModelo = new Actividad();
         $actividad = $actividadModelo->buscarPorId($actividadId);
         $esParticipante = ($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE';
@@ -218,6 +222,7 @@ final class InscripcionController extends Controller
         }
 
         $errores = Validaciones::validar([
+            fn() => Validaciones::entero($rawActividad, 'actividad'),
             fn() => !$actividad ? 'Actividad no encontrada.' : null,
             fn() => $actividad && !$actividadModelo->admiteInscripcion($actividad) ? 'Esta actividad no admite inscripciones en su estado actual.' : null,
             fn() => Validaciones::requerido($datos['nombre'], 'nombre'),

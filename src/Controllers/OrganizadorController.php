@@ -74,6 +74,8 @@ final class OrganizadorController extends Controller
             fn() => Validaciones::enLista($datos['tipo_organizador'], Organizador::TIPOS, 'tipo de organizador'),
             fn() => Validaciones::requerido($datos['passphrase_llave'], 'frase de seguridad de la llave privada'),
             fn() => $usuarioModelo->correoExiste($datos['correo']) ? 'Ya existe un usuario con ese correo.' : null,
+            fn() => $datos['academia_id'] !== null ? Validaciones::entero($datos['academia_id'], 'academia') : null,
+            fn() => $datos['academia_id'] !== null && !(new Academia())->buscarPorId($datos['academia_id']) ? 'La academia seleccionada no existe.' : null,
         ]);
 
         if (!empty($errores)) {

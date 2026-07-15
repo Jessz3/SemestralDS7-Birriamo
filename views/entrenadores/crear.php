@@ -24,11 +24,11 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Correo</label>
-                    <input type="email" name="correo">
+                    <input type="email" name="correo" required>
                 </div>
                 <div class="field">
                     <label>Telefono</label>
-                    <input type="text" name="telefono">
+                    <input type="tel" name="telefono" pattern="[0-9]+" inputmode="numeric" required>
                 </div>
             </div>
             <div class="grid-2">
