@@ -166,6 +166,7 @@ if (($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE') {
         '/equipos', '/equipos/crear', '/equipos/ver',
         '/equipos/jugadores/agregar', '/equipos/jugadores/eliminar',
         '/inscripciones/equipo/crear', '/inscripciones/individual/crear',
+        '/facturas', '/facturas/ver', '/facturas/descargar',
         '/factura-publica', '/mi-cuenta/password',
     ];
 

@@ -39,7 +39,7 @@
             <div class="signature-box"><?= htmlspecialchars($factura['pdf_hash_sha256']) ?></div>
         <?php endif; ?>
 
-        <a class="btn btn-primary" style="margin-top:1rem;" href="/facturas/descargar?id=<?= (int) $factura['id'] ?>">Descargar PDF firmado</a>
-        <a class="btn btn-outline" style="margin-top:1rem;" href="/facturas">← Volver</a>
+        <a class="btn btn-primary" style="margin-top:1rem;" href="<?= BASE_URL ?>/facturas/descargar?id=<?= (int) $factura['id'] ?>">Descargar PDF firmado</a>
+        <a class="btn btn-outline" style="margin-top:1rem;" href="<?= BASE_URL ?>/facturas">← Volver</a>
     </div>
 </div>

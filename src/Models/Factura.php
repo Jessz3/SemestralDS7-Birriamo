@@ -26,6 +26,19 @@ final class Factura extends Model
         return $this->db->query($sql)->fetchAll();
     }
 
+    public function porParticipante(int $participanteId): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT f.*, a.nombre AS actividad_nombre
+             FROM facturas f
+             JOIN actividades a ON a.id = f.actividad_id
+             WHERE f.participante_id = :participante_id
+             ORDER BY f.fecha_venta DESC'
+        );
+        $stmt->execute(['participante_id' => $participanteId]);
+        return $stmt->fetchAll();
+    }
+
     public function buscarPorId(int $id): ?array
     {
         $sql = 'SELECT f.*, a.nombre AS actividad_nombre, a.fecha_inicio AS actividad_fecha, a.tipo AS actividad_tipo
