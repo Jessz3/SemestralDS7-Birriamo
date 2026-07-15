@@ -41,20 +41,31 @@ final class EntrenadorController extends Controller
         $this->requireAuth();
         $this->verifyCsrf();
 
+        $rawAnios = $_POST['anios_experiencia'] ?? '';
+        $rawAcademia = $_POST['academia_id'] ?? '';
+        $rawOrganizador = $_POST['organizador_id'] ?? '';
+
         $datos = [
             'nombre_completo' => Sanitizacion::texto($_POST['nombre_completo'] ?? ''),
             'cedula' => Sanitizacion::texto($_POST['cedula'] ?? ''),
             'correo' => Sanitizacion::email($_POST['correo'] ?? ''),
             'telefono' => Sanitizacion::texto($_POST['telefono'] ?? ''),
             'certificaciones' => Sanitizacion::texto($_POST['certificaciones'] ?? ''),
-            'anios_experiencia' => Sanitizacion::entero($_POST['anios_experiencia'] ?? 0) ?: null,
-            'academia_id' => Sanitizacion::entero($_POST['academia_id'] ?? 0) ?: null,
-            'organizador_id' => Sanitizacion::entero($_POST['organizador_id'] ?? 0) ?: null,
+            'anios_experiencia' => Sanitizacion::entero($rawAnios) ?: null,
+            'academia_id' => Sanitizacion::entero($rawAcademia) ?: null,
+            'organizador_id' => Sanitizacion::entero($rawOrganizador) ?: null,
             'deportes' => array_map('intval', $_POST['deportes'] ?? []),
         ];
 
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($datos['nombre_completo'], 'nombre completo'),
+            fn() => Validaciones::requerido($datos['correo'], 'correo'),
+            fn() => Validaciones::email($datos['correo']),
+            fn() => Validaciones::requerido($datos['telefono'], 'telefono'),
+            fn() => Validaciones::entero($datos['telefono'], 'telefono'),
+            fn() => $rawAnios !== '' ? Validaciones::enteroPositivo($rawAnios, 'años de experiencia') : null,
+            fn() => $rawAcademia !== '' ? Validaciones::entero($rawAcademia, 'academia') : null,
+            fn() => $rawOrganizador !== '' ? Validaciones::entero($rawOrganizador, 'organizador') : null,
         ]);
 
         if (!empty($errores)) {

@@ -121,4 +121,13 @@ final class Validaciones
         }
         return $errores;
     }
+
+    public static function nombrePersona(string $valor, string $campo): ?string
+    {
+        if (!preg_match('/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+$/u', $valor)) {
+            return "El campo {$campo} solo puede contener letras y espacios.";
+        }
+
+        return null;
+    }
 }

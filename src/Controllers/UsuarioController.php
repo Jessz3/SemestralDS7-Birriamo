@@ -256,7 +256,12 @@ final class UsuarioController extends Controller
 
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($datos['nombre'], 'nombre'),
+            fn() => Validaciones::longitud($datos['nombre'], 2, 100, 'nombre'),
+            fn() => Validaciones::nombrePersona($datos['nombre'], 'nombre'),
+
             fn() => Validaciones::requerido($datos['apellido'], 'apellido'),
+            fn() => Validaciones::longitud($datos['apellido'], 2, 100, 'apellido'),
+            fn() => Validaciones::nombrePersona($datos['apellido'], 'apellido'),
             fn() => Validaciones::email($datos['correo']),
             fn() => Validaciones::enLista($datos['rol'], Usuario::ROLES, 'rol'),
             fn() => $datos['rol'] !== $usuarioActual['rol']

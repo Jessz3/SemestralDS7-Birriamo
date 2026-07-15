@@ -100,9 +100,13 @@ final class EquipoController extends Controller
 
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($datos['nombre'], 'nombre del equipo'),
-            fn() => Validaciones::requerido((string) $datos['deporte_id'], 'deporte'),
+                fn() => Validaciones::entero($datos['deporte_id'], 'deporte'),
+                fn() => Validaciones::enteroPositivo($datos['deporte_id'], 'deporte'),
             fn() => Validaciones::requerido($datos['rep_nombre'], 'nombre del representante'),
+            fn() => Validaciones::nombrePersona($datos['rep_nombre'], 'nombre del representante'),
+
             fn() => Validaciones::requerido($datos['rep_apellido'], 'apellido del representante'),
+            fn() => Validaciones::nombrePersona($datos['rep_apellido'], 'apellido del representante'),
             fn() => Validaciones::email($datos['rep_correo']),
         ]);
 

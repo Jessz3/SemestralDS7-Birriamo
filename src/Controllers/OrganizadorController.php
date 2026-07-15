@@ -65,12 +65,17 @@ final class OrganizadorController extends Controller
 
         $errores = Validaciones::validar([
             fn() => Validaciones::requerido($datos['nombre'], 'nombre'),
+            fn() => Validaciones::nombrePersona($datos['nombre'], 'nombre'),
+
             fn() => Validaciones::requerido($datos['apellido'], 'apellido'),
+            fn() => Validaciones::nombrePersona($datos['apellido'], 'apellido'),
             fn() => Validaciones::requerido($datos['correo'], 'correo'),
             fn() => Validaciones::email($datos['correo']),
             fn() => Validaciones::enLista($datos['tipo_organizador'], Organizador::TIPOS, 'tipo de organizador'),
             fn() => Validaciones::requerido($datos['passphrase_llave'], 'frase de seguridad de la llave privada'),
             fn() => $usuarioModelo->correoExiste($datos['correo']) ? 'Ya existe un usuario con ese correo.' : null,
+            fn() => $datos['academia_id'] !== null ? Validaciones::entero($datos['academia_id'], 'academia') : null,
+            fn() => $datos['academia_id'] !== null && !(new Academia())->buscarPorId($datos['academia_id']) ? 'La academia seleccionada no existe.' : null,
         ]);
 
         if (!empty($errores)) {
@@ -154,8 +159,12 @@ final class OrganizadorController extends Controller
     public function verificar(): void
     {
         $this->requireRole('ADMINISTRADOR');
-        $this->verifyCsrf($_GET['csrf_token'] ?? null);
-        $id = (int) ($_GET['id'] ?? 0);
+        $this->verifyCsrf();
+        $id = (int) ($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            $this->flashErrors(['Identificador de organizador no valido.']);
+            $this->redirect('/organizadores');
+        }
         (new Organizador())->verificar($id, (int) $_SESSION['usuario_id']);
         $this->flashSuccess('Organizador verificado.');
         $this->redirect('/organizadores');
@@ -163,17 +172,27 @@ final class OrganizadorController extends Controller
 
     public function deshabilitar(): void
     {
-        $this->requireAuth();
-        $this->verifyCsrf($_GET['csrf_token'] ?? null);
-        (new Organizador())->cambiarEstado((int) ($_GET['id'] ?? 0), false);
+        $this->requireRole('ADMINISTRADOR');
+        $this->verifyCsrf();
+        $id = (int) ($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            $this->flashErrors(['Identificador de organizador no valido.']);
+            $this->redirect('/organizadores');
+        }
+        (new Organizador())->cambiarEstado($id, false);
         $this->redirect('/organizadores');
     }
 
     public function habilitar(): void
     {
-        $this->requireAuth();
-        $this->verifyCsrf($_GET['csrf_token'] ?? null);
-        (new Organizador())->cambiarEstado((int) ($_GET['id'] ?? 0), true);
+        $this->requireRole('ADMINISTRADOR');
+        $this->verifyCsrf();
+        $id = (int) ($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            $this->flashErrors(['Identificador de organizador no valido.']);
+            $this->redirect('/organizadores');
+        }
+        (new Organizador())->cambiarEstado($id, true);
         $this->redirect('/organizadores');
     }
 }
