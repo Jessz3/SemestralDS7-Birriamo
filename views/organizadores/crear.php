@@ -11,21 +11,21 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" required>
+                    <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" minlength="2" maxlength="80" required>
                 </div>
                 <div class="field">
                     <label>Apellido</label>
-                    <input type="text" name="apellido" value="<?= htmlspecialchars($datos['apellido'] ?? '') ?>" required>
+                    <input type="text" name="apellido" value="<?= htmlspecialchars($datos['apellido'] ?? '') ?>" minlength="2" maxlength="80" required>
                 </div>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>Correo electronico</label>
-                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" required>
+                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" maxlength="150" required>
                 </div>
                 <div class="field">
                     <label>Telefono</label>
-                    <input type="text" name="telefono" value="<?= htmlspecialchars($datos['telefono'] ?? '') ?>">
+                    <input type="tel" name="telefono" value="<?= htmlspecialchars($datos['telefono'] ?? '') ?>" pattern="6[0-9]{7}" minlength="8" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese un celular panameno de 8 digitos que comience con 6">
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
 
             <div class="field">
                 <label>Nombre comercial (opcional)</label>
-                <input type="text" name="nombre_comercial" value="<?= htmlspecialchars($datos['nombre_comercial'] ?? '') ?>">
+                <input type="text" name="nombre_comercial" value="<?= htmlspecialchars($datos['nombre_comercial'] ?? '') ?>" maxlength="160">
             </div>
             <div class="field">
                 <label>Descripcion</label>

@@ -56,11 +56,11 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Capacidad de invitados</label>
-                    <input type="number" name="capacidad_invitados" value="<?= (int) $instalacion['capacidad_invitados'] ?>" min="0" required>
+                    <input type="number" name="capacidad_invitados" value="<?= (int) $instalacion['capacidad_invitados'] ?>" min="0" max="65535" step="1" required>
                 </div>
                 <div class="field">
                     <label>Costo base ($)</label>
-                    <input type="number" step="0.01" name="costo_base" value="<?= htmlspecialchars($instalacion['costo_base']) ?>" min="0" required>
+                    <input type="number" step="0.01" name="costo_base" value="<?= htmlspecialchars($instalacion['costo_base']) ?>" min="0" max="99999999.99" required>
                 </div>
             </div>
 

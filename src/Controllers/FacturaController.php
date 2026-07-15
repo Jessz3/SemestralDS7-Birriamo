@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Factura;
+use App\Models\Participante;
 use TCPDF;
 
 /**
@@ -18,15 +19,20 @@ final class FacturaController extends Controller
     public function index(): void
     {
         $this->requireAuth();
+        $modelo = new Factura();
+        $esParticipante = $this->esParticipante();
         $this->render('facturas/index', [
-            'facturas' => (new Factura())->todas(),
+            'facturas' => $esParticipante
+                ? $modelo->porParticipante($this->participanteIdActual())
+                : $modelo->todas(),
+            'esParticipante' => $esParticipante,
         ]);
     }
 
     public function ver(): void
     {
         $this->requireAuth();
-        $this->mostrarFactura((int) ($_GET['id'] ?? 0), 'facturas/ver');
+        $this->mostrarFactura((int) ($_GET['id'] ?? 0), 'facturas/ver', 'layout/main', true);
     }
 
     public function verPublica(): void
@@ -34,13 +40,17 @@ final class FacturaController extends Controller
         $this->mostrarFactura((int) ($_GET['id'] ?? 0), 'facturas/ver_publica', 'layout/guest');
     }
 
-    private function mostrarFactura(int $id, string $vista, string $layout = 'layout/main'): void
+    private function mostrarFactura(int $id, string $vista, string $layout = 'layout/main', bool $validarAcceso = false): void
     {
         $modelo = new Factura();
         $factura = $modelo->buscarPorId($id);
 
         if (!$factura) {
             $this->redirect('/');
+        }
+
+        if ($validarAcceso) {
+            $this->autorizarFactura($factura);
         }
 
         $this->render($vista, [
@@ -59,6 +69,10 @@ final class FacturaController extends Controller
             http_response_code(404);
             echo 'Factura no encontrada.';
             return;
+        }
+
+        if (!empty($_SESSION['usuario_id'])) {
+            $this->autorizarFactura($factura);
         }
 
         if (!class_exists(TCPDF::class)) {
@@ -134,5 +148,31 @@ final class FacturaController extends Controller
         $modelo->actualizarRutaPdf((int) $factura['id'], '/uploads/factura_' . $factura['id'] . '.pdf', $hash);
 
         $pdf->Output('Factura_' . $factura['numero_factura'] . '.pdf', 'D');
+    }
+
+    private function esParticipante(): bool
+    {
+        return ($_SESSION['usuario_rol'] ?? '') === 'PARTICIPANTE';
+    }
+
+    private function participanteIdActual(): int
+    {
+        $participante = (new Participante())->buscarPorUsuarioId((int) ($_SESSION['usuario_id'] ?? 0));
+        if (!$participante) {
+            throw new \RuntimeException('La cuenta no tiene un perfil de participante asociado.');
+        }
+        return (int) $participante['id'];
+    }
+
+    private function autorizarFactura(array $factura): void
+    {
+        if (!$this->esParticipante()) {
+            return;
+        }
+        if ((int) ($factura['participante_id'] ?? 0) !== $this->participanteIdActual()) {
+            http_response_code(403);
+            $this->render('errors/403');
+            exit;
+        }
     }
 }

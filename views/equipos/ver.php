@@ -28,26 +28,26 @@
 
                 <div class="field">
                     <label>Nombre completo</label>
-                    <input type="text" name="nombre_completo" required>
+                    <input type="text" name="nombre_completo" minlength="3" maxlength="160" required>
                 </div>
                 <div class="grid-2">
                     <div class="field">
                         <label>Edad</label>
-                        <input type="number" name="edad" min="5" max="80" required>
+                        <input type="number" name="edad" min="5" max="80" step="1" required>
                     </div>
                     <div class="field">
                         <label>Peso (kg)</label>
-                        <input type="number" step="0.1" name="peso_kg">
+                        <input type="number" step="0.1" name="peso_kg" min="1" max="500">
                     </div>
                 </div>
                 <div class="grid-2">
                     <div class="field">
                         <label>Posicion</label>
-                        <input type="text" name="posicion">
+                        <input type="text" name="posicion" maxlength="80">
                     </div>
                     <div class="field">
                         <label>Numero de camiseta</label>
-                        <input type="number" name="numero_camiseta" min="0" max="99">
+                        <input type="number" name="numero_camiseta" min="0" max="99" step="1">
                     </div>
                 </div>
                 <div class="field">

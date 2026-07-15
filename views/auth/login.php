@@ -15,7 +15,7 @@
 
             <div class="field">
                 <label for="usuario">Usuario</label>
-                <input type="text" id="usuario" name="usuario" required autofocus>
+                <input type="text" id="usuario" name="usuario" minlength="3" maxlength="60" autocomplete="username" required autofocus>
             </div>
 
             <?php

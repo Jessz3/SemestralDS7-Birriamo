@@ -21,11 +21,11 @@
             <div class="grid-2">
                 <div class="field">
                     <label>Minimo de jugadores</label>
-                    <input type="number" name="minimo_jugadores" min="1">
+                    <input type="number" name="minimo_jugadores" min="1" max="1000" step="1">
                 </div>
                 <div class="field">
                     <label>Maximo de jugadores</label>
-                    <input type="number" name="maximo_jugadores" min="1">
+                    <input type="number" name="maximo_jugadores" min="1" max="1000" step="1">
                 </div>
             </div>
             <p class="field-hint">Deja los campos de jugadores en blanco para disciplinas individuales.</p>

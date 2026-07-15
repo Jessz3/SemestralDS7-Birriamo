@@ -31,7 +31,6 @@
                 <a href="<?= BASE_URL ?>/arbitros">Arbitros</a>
             <?php endif; ?>
 
-            <a href="<?= BASE_URL ?>/facturas">Facturas</a>
             <a href="<?= BASE_URL ?>/estadisticas">Estadisticas</a>
 
             <?php if ($rol === 'ADMINISTRADOR'): ?>
@@ -40,6 +39,7 @@
             <?php endif; ?>
 
         <?php endif; ?>
+        <a href="<?= BASE_URL ?>/facturas"><?= $rol === 'PARTICIPANTE' ? 'Mis facturas' : 'Facturas' ?></a>
         <span class="spacer"></span>
         <?php if (!empty($_SESSION['usuario_nombre'])): ?>
             <a class="nav-user" href="<?= BASE_URL ?>/mi-cuenta/password">👤 <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></a>
@@ -53,5 +53,6 @@
 </main>
 
 <?php require ROOT_PATH . '/views/layout/footer.php'; ?>
+<script src="<?= BASE_URL ?>/assets/js/form-validations.js"></script>
 </body>
 </html>

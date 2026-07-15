@@ -64,12 +64,12 @@
         <form method="POST" action="<?= BASE_URL ?>/contacto">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
             <div class="grid-2">
-                <div class="field"><label>Nombre</label><input type="text" name="nombre" required></div>
-                <div class="field"><label>Correo electrónico</label><input type="email" name="correo" required></div>
+                <div class="field"><label>Nombre</label><input type="text" name="nombre" minlength="2" maxlength="160" required></div>
+                <div class="field"><label>Correo electrónico</label><input type="email" name="correo" maxlength="150" required></div>
             </div>
-            <div class="field"><label>Teléfono (opcional)</label><input type="text" name="telefono"></div>
-            <div class="field"><label>Asunto</label><input type="text" name="asunto" required></div>
-            <div class="field"><label>Mensaje</label><textarea name="mensaje" rows="4" required></textarea></div>
+            <div class="field"><label>Teléfono (opcional)</label><input type="tel" name="telefono" pattern="(?:6[0-9]{7}|[2-9][0-9]{6})" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese un celular de 8 digitos que inicie en 6 o un telefono fijo panameno de 7 digitos"></div>
+            <div class="field"><label>Asunto</label><input type="text" name="asunto" minlength="3" maxlength="180" required></div>
+            <div class="field"><label>Mensaje</label><textarea name="mensaje" rows="4" minlength="10" maxlength="2000" required></textarea></div>
             <button type="submit" class="btn btn-primary">Enviar mensaje</button>
         </form>
     </div>

@@ -9,26 +9,26 @@
 
             <div class="field">
                 <label>Nombre de la academia</label>
-                <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" required>
+                <input type="text" name="nombre" value="<?= htmlspecialchars($datos['nombre'] ?? '') ?>" minlength="2" maxlength="150" required>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>RUC (opcional)</label>
-                    <input type="text" name="ruc" value="<?= htmlspecialchars($datos['ruc'] ?? '') ?>">
+                    <input type="text" name="ruc" value="<?= htmlspecialchars($datos['ruc'] ?? '') ?>" maxlength="30">
                 </div>
                 <div class="field">
                     <label>Telefono</label>
-                    <input type="text" name="telefono" value="<?= htmlspecialchars($datos['telefono'] ?? '') ?>">
+                    <input type="tel" name="telefono" value="<?= htmlspecialchars($datos['telefono'] ?? '') ?>" pattern="(?:6[0-9]{7}|[2-9][0-9]{6})" maxlength="8" inputmode="numeric" placeholder="61234567" title="Ingrese un celular de 8 digitos que inicie en 6 o un telefono fijo panameno de 7 digitos">
                 </div>
             </div>
             <div class="grid-2">
                 <div class="field">
                     <label>Correo electronico</label>
-                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>">
+                    <input type="email" name="correo" value="<?= htmlspecialchars($datos['correo'] ?? '') ?>" maxlength="150">
                 </div>
                 <div class="field">
                     <label>Direccion</label>
-                    <input type="text" name="direccion" value="<?= htmlspecialchars($datos['direccion'] ?? '') ?>">
+                    <input type="text" name="direccion" value="<?= htmlspecialchars($datos['direccion'] ?? '') ?>" maxlength="255">
                 </div>
             </div>
             <div class="field">
