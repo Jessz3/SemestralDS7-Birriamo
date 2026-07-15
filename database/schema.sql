@@ -1003,7 +1003,8 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `cedula_pasaporte`, `correo`
 (3, 'Erick', 'Hou', NULL, 'erick@utp.ac.pa', NULL, NULL, NULL, 'erick12', '$2y$12$irL3wERfiD9V7eXFR852peTzyZOH9kuBN0wxZxCzYftsQoL4QUxkm', 'ORGANIZADOR', 1, 0, 0, NULL, '2026-07-13 15:52:45', 1, '2026-07-13 15:52:02', '2026-07-13 15:52:45'),
 (4, 'Jessica', 'Zheng', NULL, 'jessica@utp.ac.pa', NULL, NULL, NULL, 'Jessz3', '$2y$12$tE69z2ho7UTnsWFLH64XoO7QqfiCKgh9EHC7sdGWv1Mw/9lKsV0J.', 'PARTICIPANTE', 1, 0, 0, NULL, '2026-07-13 16:46:24', 1, '2026-07-13 15:56:09', '2026-07-13 16:46:24'),
 (5, 'Roniel', 'Quintero', NULL, 'rquinte14@utp.ac.pa', NULL, NULL, NULL, 'rquinte14', '$2y$12$Goh4Fm6E0gAxfyPjYk8nIe244DdzBRkjaM1rcFhlEeLxwZMgoiJ5i', 'ORGANIZADOR', 1, 0, 0, NULL, '2026-07-13 17:44:25', NULL, '2026-07-13 16:02:36', '2026-07-13 17:44:25'),
-(6, 'Janitza', 'Justiniani', NULL, 'janitza@utp.ac.pa', '1232323', NULL, NULL, 'janitzajustiniani', '$2y$12$AwEHQsHMUWsrSIdG4aIjL.AXcunrcZNvnTvviJvNIAkYOMxgkJNXe', 'PARTICIPANTE', 1, 1, 0, NULL, NULL, NULL, '2026-07-13 16:48:26', '2026-07-13 16:48:26');
+(6, 'Janitza', 'Justiniani', NULL, 'janitza@utp.ac.pa', '1232323', NULL, NULL, 'janitzajustiniani', '$2y$12$AwEHQsHMUWsrSIdG4aIjL.AXcunrcZNvnTvviJvNIAkYOMxgkJNXe', 'PARTICIPANTE', 1, 1, 0, NULL, NULL, NULL, '2026-07-13 16:48:26', '2026-07-13 16:48:26'),
+(7, 'Operador', 'Quintero', NULL, 'operador1@gmail.com', NULL, NULL, NULL, 'operador1', '$2y$12$O66CR9rOM70ll.pGSGkElO39MwWw25w4RMYfDACj98S4W2Dv0UE7C', 'OPERADOR', 1, 0, 0, NULL, '2026-07-15 00:13:33', NULL, '2026-07-15 00:13:30', '2026-07-15 00:13:48');
 
 -- --------------------------------------------------------
 
@@ -1273,3 +1274,194 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- ---------------------------
+-- INSERTS DE PRUEBA
+-- ---------------------------
+
+-- ENTRENADOR
+INSERT INTO entrenadores (
+    organizador_id,
+    academia_id,
+    nombre_completo,
+    cedula,
+    correo,
+    telefono,
+    certificaciones,
+    anios_experiencia
+) VALUES (
+    2,
+    1,
+    'Carlos Mendoza',
+    '8-999-123',
+    'carlos@deporte.com',
+    '6000-1111',
+    'Licencia Nacional de Entrenador',
+    8
+);
+
+-- ENTRENADOR_DEPORTES
+INSERT INTO entrenador_deportes (
+    entrenador_id,
+    deporte_id
+) VALUES (
+    1,
+    1
+);
+
+-- CALENDARIO ACTIVIDAD
+INSERT INTO calendario_actividad_fechas (
+    actividad_id,
+    titulo,
+    fecha_inicio,
+    fecha_fin,
+    instalacion_id,
+    descripcion,
+    numero_jornada
+) VALUES (
+    3,
+    'Jornada 1',
+    '2026-07-20 08:00:00',
+    '2026-07-20 10:00:00',
+    1,
+    'Partido inaugural',
+    1
+);
+
+-- JUGADOR
+INSERT INTO jugadores (
+    equipo_id,
+    nombre_completo,
+    fecha_nacimiento,
+    edad,
+    peso_kg,
+    posicion,
+    numero_camiseta,
+    capitan
+) VALUES (
+    1,
+    'Luis González',
+    '2005-05-10',
+    21,
+    72.50,
+    'Delantero',
+    10,
+    1
+);
+
+-- INSCRIPCION EQUIPO
+INSERT INTO inscripciones_equipos (
+    actividad_id,
+    equipo_id,
+    estado,
+    reglas_aceptadas
+) VALUES (
+    3,
+    1,
+    'APROBADA',
+    1
+);
+
+-- INVITACION
+INSERT INTO invitaciones (
+    actividad_id,
+    academia_id,
+    correo_destino,
+    mensaje,
+    token,
+    estado
+) VALUES (
+    3,
+    1,
+    'halcones@gmail.com',
+    'Invitación al torneo',
+    SHA2(CONCAT(NOW(),'halcones'),256),
+    'PENDIENTE'
+);
+
+-- DEVOLUCION
+INSERT INTO devoluciones (
+    pago_id,
+    factura_id,
+    actividad_id,
+    motivo,
+    monto,
+    estado,
+    solicitada_por
+) VALUES (
+    1,
+    1,
+    2,
+    'Cancelación de participación',
+    3.21,
+    'SOLICITADA',
+    4
+);
+
+-- HISTORIAL PASSWORD
+INSERT INTO historial_passwords (
+    usuario_id,
+    password_hash
+)
+SELECT
+    id,
+    password_hash
+FROM usuarios
+WHERE id = 1;
+
+-- TOKEN RECUPERACION
+INSERT INTO tokens_recuperacion (
+    usuario_id,
+    token_hash,
+    fecha_expiracion
+) VALUES (
+    1,
+    SHA2('token-prueba-admin',256),
+    DATE_ADD(NOW(), INTERVAL 1 DAY)
+);
+
+INSERT INTO usuarios (
+    nombre,
+    apellido,
+    correo,
+    usuario,
+    password_hash,
+    rol,
+    activo
+) VALUES
+(
+    'Ana',
+    'Admin',
+    'ana.admin@test.com',
+    'admin2',
+    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+    'ADMINISTRADOR',
+    1
+),
+(
+    'Oscar',
+    'Operador',
+    'oscar.operador@test.com',
+    'operador2',
+    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+    'OPERADOR',
+    1
+),
+(
+    'Olga',
+    'Organizadora',
+    'olga.organizador@test.com',
+    'organizador2',
+    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+    'ORGANIZADOR',
+    1
+),
+(
+    'Pedro',
+    'Participante',
+    'pedro.participante@test.com',
+    'participante2',
+    '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+    'PARTICIPANTE',
+    1
+);
