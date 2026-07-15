@@ -15,19 +15,30 @@
         <a href="<?= BASE_URL ?>/dashboard">Inicio</a>
         <a href="<?= BASE_URL ?>/actividades">Actividades</a>
         <a href="<?= BASE_URL ?>/equipos">Equipos</a>
-        <?php if (($_SESSION['usuario_rol'] ?? '') !== 'PARTICIPANTE'): ?>
-        <a href="<?= BASE_URL ?>/deportes">Deportes</a>
-        <a href="<?= BASE_URL ?>/instalaciones">Instalaciones</a>
-        <a href="<?= BASE_URL ?>/academias">Academias</a>
-        <a href="<?= BASE_URL ?>/organizadores">Organizadores</a>
-        <a href="<?= BASE_URL ?>/entrenadores">Entrenadores</a>
-        <a href="<?= BASE_URL ?>/arbitros">Arbitros</a>
-        <a href="<?= BASE_URL ?>/facturas">Facturas</a>
-        <a href="<?= BASE_URL ?>/estadisticas">Estadisticas</a>
-        <?php if (($_SESSION['usuario_rol'] ?? '') === 'ADMINISTRADOR'): ?>
-            <a href="<?= BASE_URL ?>/usuarios">Usuarios</a>
-            <a href="<?= BASE_URL ?>/configuracion">Configuración</a>
-        <?php endif; ?>
+        <?php $rol = $_SESSION['usuario_rol'] ?? ''; ?>
+
+        <?php if ($rol !== 'PARTICIPANTE'): ?>
+
+            <?php if (in_array($rol, ['ADMINISTRADOR', 'OPERADOR'], true)): ?>
+                <a href="<?= BASE_URL ?>/deportes">Deportes</a>
+                <a href="<?= BASE_URL ?>/instalaciones">Instalaciones</a>
+                <a href="<?= BASE_URL ?>/academias">Academias</a>
+                <a href="<?= BASE_URL ?>/organizadores">Organizadores</a>
+            <?php endif; ?>
+
+            <?php if (in_array($rol, ['ADMINISTRADOR', 'OPERADOR', 'ORGANIZADOR'], true)): ?>
+                <a href="<?= BASE_URL ?>/entrenadores">Entrenadores</a>
+                <a href="<?= BASE_URL ?>/arbitros">Arbitros</a>
+            <?php endif; ?>
+
+            <a href="<?= BASE_URL ?>/facturas">Facturas</a>
+            <a href="<?= BASE_URL ?>/estadisticas">Estadisticas</a>
+
+            <?php if ($rol === 'ADMINISTRADOR'): ?>
+                <a href="<?= BASE_URL ?>/usuarios">Usuarios</a>
+                <a href="<?= BASE_URL ?>/configuracion">Configuración</a>
+            <?php endif; ?>
+
         <?php endif; ?>
         <span class="spacer"></span>
         <?php if (!empty($_SESSION['usuario_nombre'])): ?>

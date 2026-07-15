@@ -8,25 +8,41 @@ use App\Core\Controller;
 use App\Models\Actividad;
 use App\Models\Arbitro;
 use App\Models\Deporte;
-use App\Models\Organizador;
 use App\Utils\Sanitizacion;
 use App\Utils\Validaciones;
 
-/** Requisito #19: Arbitros y su desempeno evaluado por el organizador. */
+/**
+ * Requisito #19: Arbitros y su desempeno evaluado por el organizador.
+ */
 final class ArbitroController extends Controller
 {
+    /**
+     * Administrador, Operador y Organizador pueden consultar árbitros.
+     */
     public function index(): void
     {
-        $this->requireAuth();
+        $this->requireRole(
+            'ADMINISTRADOR',
+            'OPERADOR',
+            'ORGANIZADOR'
+        );
+
         $this->render('arbitros/index', [
             'arbitros' => (new Arbitro())->todosConDesempeno(),
             'exito' => $this->getSuccess(),
         ]);
     }
 
+    /**
+     * Solo Administrador y Operador pueden registrar árbitros.
+     */
     public function crearForm(): void
     {
-        $this->requireAuth();
+        $this->requireRole(
+            'ADMINISTRADOR',
+            'OPERADOR'
+        );
+
         $this->render('arbitros/crear', [
             'deportes' => (new Deporte())->todos(true),
             'errores' => $this->getErrors(),
@@ -36,7 +52,11 @@ final class ArbitroController extends Controller
 
     public function crear(): void
     {
-        $this->requireAuth();
+        $this->requireRole(
+            'ADMINISTRADOR',
+            'OPERADOR'
+        );
+
         $this->verifyCsrf();
 
         $datos = [
@@ -50,7 +70,10 @@ final class ArbitroController extends Controller
         ];
 
         $errores = Validaciones::validar([
-            fn() => Validaciones::requerido($datos['nombre_completo'], 'nombre completo'),
+            fn() => Validaciones::requerido(
+                $datos['nombre_completo'],
+                'nombre completo'
+            ),
         ]);
 
         if (!empty($errores)) {
@@ -59,15 +82,21 @@ final class ArbitroController extends Controller
         }
 
         (new Arbitro())->crear($datos);
+
         $this->flashSuccess('Arbitro registrado correctamente.');
         $this->redirect('/arbitros');
     }
 
+    /**
+     * Solo el Organizador puede evaluar árbitros.
+     */
     public function evaluarForm(): void
     {
-        $this->requireAuth();
+        $this->requireRole('ORGANIZADOR');
+
         $actividadId = (int) ($_GET['actividad_id'] ?? 0);
         $arbitroId = (int) ($_GET['arbitro_id'] ?? 0);
+
         $actividad = (new Actividad())->buscarPorId($actividadId);
         $arbitro = (new Arbitro())->buscarPorId($arbitroId);
 
@@ -78,7 +107,6 @@ final class ArbitroController extends Controller
         $this->render('arbitros/evaluar', [
             'actividad' => $actividad,
             'arbitro' => $arbitro,
-            'organizadores' => (new Organizador())->todos(),
             'errores' => $this->getErrors(),
             'csrf' => $_SESSION['csrf_token'],
         ]);
@@ -86,34 +114,77 @@ final class ArbitroController extends Controller
 
     public function evaluar(): void
     {
-        $this->requireAuth();
+        $this->requireRole('ORGANIZADOR');
+
         $this->verifyCsrf();
 
         $actividadId = (int) ($_POST['actividad_id'] ?? 0);
         $arbitroId = (int) ($_POST['arbitro_id'] ?? 0);
-        $organizadorId = (int) ($_POST['organizador_id'] ?? 0);
-        $puntuacion = Sanitizacion::entero($_POST['puntuacion'] ?? 0);
-        $puntualidad = Sanitizacion::entero($_POST['puntualidad'] ?? 0) ?: null;
-        $reglas = Sanitizacion::entero($_POST['conocimiento_reglas'] ?? 0) ?: null;
-        $imparcialidad = Sanitizacion::entero($_POST['imparcialidad'] ?? 0) ?: null;
-        $manejo = Sanitizacion::entero($_POST['manejo_actividad'] ?? 0) ?: null;
-        $comentario = Sanitizacion::texto($_POST['comentario'] ?? '');
+
+        $organizadorId = (int) ($_SESSION['usuario_id'] ?? 0);
+
+        $puntuacion = Sanitizacion::entero(
+            $_POST['puntuacion'] ?? 0
+        );
+
+        $puntualidad = Sanitizacion::entero(
+            $_POST['puntualidad'] ?? 0
+        ) ?: null;
+
+        $reglas = Sanitizacion::entero(
+            $_POST['conocimiento_reglas'] ?? 0
+        ) ?: null;
+
+        $imparcialidad = Sanitizacion::entero(
+            $_POST['imparcialidad'] ?? 0
+        ) ?: null;
+
+        $manejo = Sanitizacion::entero(
+            $_POST['manejo_actividad'] ?? 0
+        ) ?: null;
+
+        $comentario = Sanitizacion::texto(
+            $_POST['comentario'] ?? ''
+        );
 
         $errores = Validaciones::validar([
-            fn() => Validaciones::rangoNumerico((float) $puntuacion, 1, 5, 'puntuacion general'),
+            fn() => Validaciones::rangoNumerico(
+                (float) $puntuacion,
+                1,
+                5,
+                'puntuacion general'
+            ),
         ]);
 
         if (!empty($errores)) {
             $this->flashErrors($errores);
-            $this->redirect('/arbitros/evaluar?actividad_id=' . $actividadId . '&arbitro_id=' . $arbitroId);
+
+            $this->redirect(
+                '/arbitros/evaluar?actividad_id='
+                . $actividadId
+                . '&arbitro_id='
+                . $arbitroId
+            );
         }
 
         (new Arbitro())->registrarEvaluacion(
-            $actividadId, $arbitroId, $organizadorId, $puntuacion,
-            $puntualidad, $reglas, $imparcialidad, $manejo, $comentario ?: null
+            $actividadId,
+            $arbitroId,
+            $organizadorId,
+            $puntuacion,
+            $puntualidad,
+            $reglas,
+            $imparcialidad,
+            $manejo,
+            $comentario ?: null
         );
 
-        $this->flashSuccess('Evaluacion registrada correctamente.');
-        $this->redirect('/actividades/ver?id=' . $actividadId);
+        $this->flashSuccess(
+            'Evaluacion registrada correctamente.'
+        );
+
+        $this->redirect(
+            '/actividades/ver?id=' . $actividadId
+        );
     }
 }
